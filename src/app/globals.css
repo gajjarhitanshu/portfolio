@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background-color: #263238;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.dynamic-height {
+  height: calc(100vh - 80px); /* Adjust the header height here */
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0); /* Transparent background */
+  backdrop-filter: blur(20px); /* Blur effect */
+  border: 1px solid rgba(255, 255, 255, 0); /* Border with transparency */
+  border-radius: 0.5rem; /* Rounded corners */
+  transition: all 0.3s ease-in-out; /* Smooth transitions */
+}
+
+.glass-effect:hover {
+  background: rgba(255, 255, 255, 0.1); /* More opacity on hover */
+  backdrop-filter: blur(30px); /* More blur on hover */
+  border: 1px solid rgba(255, 255, 255, 0.4); /* Slightly thicker border on hover */
+}
+
+.chip {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 9999px; /* Full pill shape */
+  margin: 4px; /* Space between chips */
+  transition: all 0.3s ease;
+}
+
+.chip:hover {
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.6); /* Stronger border on hover */
+}
+
+.chip-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px; /* Space between the chips */
+}
