@@ -68,3 +68,11 @@ body {
   flex-wrap: wrap;
   gap: 4px; /* Space between the chips */
 }
+
+@media screen and (max-width: 768px) {
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.05); /* More opacity on hover */
+    backdrop-filter: blur(30px); /* More blur on hover */
+    border: 1px solid rgba(255, 255, 255, 0.4); /* Slightly thicker border on hover */
+  }
+}

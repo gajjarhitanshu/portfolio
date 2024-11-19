@@ -12,25 +12,33 @@ export default function ProjectsHomeView(props: Props) {
   const { name, description, tech, role } = props;
 
   return (
-    <div className="glass-effect p-4 flex flex-row">
-      <div className="flex flex-1 ms-4 flex-col">
-        <div className="flex  flex-row center-align">
-          <CText baseSize={18}>{`${name} - `}</CText>
-          <CText baseSize={14} className="opacity-70 ms-1 mt-1">{`${role.join(
-            ", "
-          )}`}</CText>
+    <div className="glass-effect p-4 sm:p-6 flex flex-col sm:flex-row ">
+      <div className="flex flex-1 flex-col">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center mb-2 sm:mb-0">
+          <CText baseSize={16} className="font-semibold sm:text-lg md:text-xl">
+            {`${name} - `}
+          </CText>
+          <CText
+            baseSize={14}
+            className="opacity-70 mt-1 sm:mt-0 sm:ml-2 sm:text-base md:text-lg"
+          >
+            {role.join(", ")}
+          </CText>
         </div>
-        <CText baseSize={14} className="opacity-70 mt-2">
-          {`${description}`}
+        <CText baseSize={14} className="opacity-70 mt-2 sm:mt-3 sm:text-base">
+          {description}
         </CText>
-        <div className="flex flex-row mt-2 chip-container">
-          {tech.map((item, index) => {
-            return (
-              <div key={`${index}`} className="chip">
-                <CText baseSize={10}>{item}</CText>
-              </div>
-            );
-          })}
+        <div className="flex flex-wrap mt-3 sm:mt-4 gap-2">
+          {tech.map((item, index) => (
+            <div
+              key={index}
+              className="chip bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded-full"
+            >
+              <CText baseSize={10} className="sm:text-xs md:text-sm">
+                {item}
+              </CText>
+            </div>
+          ))}
         </div>
       </div>
     </div>

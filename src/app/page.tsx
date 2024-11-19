@@ -193,12 +193,11 @@ export default function Home() {
 
       <div
         id="scrollable-div"
+        className="flex flex-col md:overflow-y-auto scroll-smooth pb-20 sm:px-6 md:px-8 lg:px-16 mt-20 md:mt-0 md:flex-1"
         style={{
-          overflowY: "scroll",
-          scrollbarWidth: "none" /* Firefox */,
-          msOverflowStyle: "none" /* IE and Edge */,
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
         }}
-        className="flex md:flex-1 mt-20 md:mt-0 flex-col overflow-scroll scroll-smooth pb-20 px-16"
       >
         <section
           ref={(el) => {
@@ -207,12 +206,14 @@ export default function Home() {
             }
           }}
           id="about"
-          className="pt-20 "
+          className="md:pt-10 lg:pt-20"
         >
-          <div className="grid gap-10">
-            <CText baseSize={28}>About</CText>
+          <div className="grid gap-6 md:gap-10">
+            <CText baseSize={24} className="sm:text-3xl md:text-4xl">
+              About
+            </CText>
 
-            <CText baseSize={16} className="opacity-80">
+            <CText baseSize={14} className="opacity-80 sm:text-base md:text-lg">
               My name is Hitanshu Gajjar, and I bring 7.5 years of experience in
               the tech industry. My career began in late 2016 as an Android
               Application Developer, a role I dedicated myself to for 2.5 years.
@@ -239,23 +240,25 @@ export default function Home() {
             </CText>
           </div>
 
-          <div className="mt-10">
-            <CText baseSize={20} className="opacity-80">
+          <div className="mt-8 md:mt-10">
+            <CText baseSize={18} className="opacity-80 sm:text-xl md:text-2xl">
               Skills
             </CText>
-            <div className="flex flex-row mt-2 chip-container">
-              {skills_arr.map((item, index) => {
-                return (
-                  <div key={`${index}`} className="chip">
-                    <CText baseSize={10}>{item}</CText>
-                  </div>
-                );
-              })}
+            <div className="flex flex-wrap mt-2 gap-2">
+              {skills_arr.map((item, index) => (
+                <div
+                  key={index}
+                  className="chip bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded-full"
+                >
+                  <CText baseSize={10} className="sm:text-xs md:text-sm">
+                    {item}
+                  </CText>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* experiences section */}
         <section
           ref={(el) => {
             if (el) {
@@ -263,18 +266,17 @@ export default function Home() {
             }
           }}
           id="experiences"
-          data-value="experiences"
           className="pt-20"
         >
-          <div className="grid gap-10">
-            <CText baseSize={28}>Experiences</CText>
-            {Experience_arr?.map((item, index) => {
-              return (
-                <div key={`${index}`}>
-                  <ExperienceItemCard {...item} />
-                </div>
-              );
-            })}
+          <div className="grid gap-6 md:gap-10">
+            <CText baseSize={24} className="sm:text-3xl md:text-4xl">
+              Experiences
+            </CText>
+            {Experience_arr?.map((item, index) => (
+              <div key={index}>
+                <ExperienceItemCard {...item} />
+              </div>
+            ))}
           </div>
         </section>
 
@@ -287,33 +289,28 @@ export default function Home() {
           id="projects"
           className="pt-20"
         >
-          <div className="grid gap-10">
-            <div className="flex flex-row items-center justify-between">
-              <CText baseSize={28}>Projects</CText>
-
-              {/* <Link href={"/projects"}>
-                <CText
-                  baseSize={14}
-                  className="opacity-70 ms-1 mt-1 cursor-pointer"
-                >
-                  Show More
-                </CText>
-              </Link> */}
+          <div className="grid gap-6 md:gap-10">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">
+              <CText baseSize={24} className="sm:text-3xl md:text-4xl">
+                Projects
+              </CText>
             </div>
-            {Projects_arr?.map((item, index) => {
-              if (item.showAsDisplay)
-                return (
-                  <div key={`${index}`}>
+            {Projects_arr?.map(
+              (item, index) =>
+                item.showAsDisplay && (
+                  <div key={index}>
                     <ProjectsHomeView {...item} />
                   </div>
-                );
-            })}
+                )
+            )}
             <Link
               href="/projects"
-              className="mt-1 inline-flex items-center text-[#5eead4] hover:text-[#5eead4]/80 transition-colors group"
+              className="mt-4 inline-flex items-center text-[#5eead4] hover:text-[#5eead4]/80 transition-colors group"
             >
-              View Full Project Archive
-              <ArrowRight className="w-5 h-5 ml-2 transition-transform duration-200 group-hover:translate-x-1" />
+              <span className="text-sm sm:text-base">
+                View Full Project Archive
+              </span>
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 transition-transform duration-200 group-hover:translate-x-1" />
             </Link>
           </div>
         </section>
