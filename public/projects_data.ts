@@ -1,7 +1,7 @@
 export const Projects_arr = [
   {
     name: "TalkToo",
-    description: `TalkToo offers personalized AI companions for daily life. Study, get advice, transform documents, and create AI assistants. Enhance learning, boost productivity, and spark creativity—your custom AI expert team, just for you.`,
+    description: `Enhanced performance by 80% using optimization techniques in React Native and React Native Web. Built reusable UI components and integrated generative AI tools (OpenAI, Gemini, Claude) to power intelligent assistants. Developed backend APIs with Node.js and SQL`,
     oneLineDescription:
       "Create custom AI companions for productivity, learning, and creativity.",
     madeAt: "Agile Soft Systems",
@@ -10,10 +10,30 @@ export const Projects_arr = [
       "ReactJS",
       "NodeJS",
       "SQL",
-      "Multiple OpenAI models",
+      "Generative AI",
     ],
     role: ["Sr. Developer and Mentor"],
     year: "2024",
+    showAsDisplay: true,
+  },
+  {
+    name: "SoundGen AI",
+    description: `Redesigned UI using Tailwind CSS and improved load time from 5 seconds to under 300 ms. Implemented frontend optimization techniques such as code-splitting, dynamic imports, and memoization, cutting initial load time by 40%.`,
+    oneLineDescription: "Generate music with AI.",
+    madeAt: "Agile Soft Systems",
+    tech: ["ReactJS", "NodeJS", "SQL", "Generative AI"],
+    role: ["Performance Optimizer"],
+    year: "2024",
+    showAsDisplay: true,
+  },
+  {
+    name: "Moshi AI",
+    description: `Built a virtual assistant capable of researching, summarizing, and generating digital content like images, videos, and documents. Developed clean, responsive UI with HTML, CSS, and JavaScript, ensuring fully autonomous task execution and seamless interaction workflows`,
+    oneLineDescription: "Generate content with AI.",
+    madeAt: "Agile Soft Systems",
+    tech: ["NextJS", "NodeJS", "SQL", "Generative AI"],
+    role: ["Sr. Developer"],
+    year: "2025",
     showAsDisplay: true,
   },
   {
@@ -29,11 +49,11 @@ export const Projects_arr = [
     ],
     year: "2021",
     madeAt: "Independent Consultant",
-    showAsDisplay: true,
+    showAsDisplay: false,
   },
   {
     name: "Skill india digital",
-    description: `Skill India Digital Hub is a government-backed platform within India’s Digital Public Infrastructure, designed to skill, upskill, and reskill the nation’s diverse populace. This mobile-first app unifies all government skilling and entrepreneurship initiatives, offering personalized course discovery, multilingual support, and simplified registration via Aadhaar-based eKYC. With AI-driven recommendations, an advanced Learning Management System, and seamless access to various government services, Skill India Digital Hub is your go-to resource for career advancement and lifelong learning in India.`,
+    description: `Created multilingual React Native interfaces for onboarding, registration, and profile flows. Integrated eKYC using Aadhaar APIs and helped implement AI-powered course recommendation features using Node.js, Python, and SQL backends`,
     tech: ["React Native", "ReactJS", "NodeJS", "SQL"],
     oneLineDescription:
       "A national platform for skilling, upskilling, and reskilling in India.",
@@ -62,7 +82,7 @@ export const Projects_arr = [
     role: ["React Native Developer"],
     year: "2021",
     madeAt: "Independent Consultant",
-    showAsDisplay: true,
+    showAsDisplay: false,
   },
   {
     year: "2020",

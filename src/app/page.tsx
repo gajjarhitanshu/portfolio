@@ -11,9 +11,9 @@ import { ArrowRight } from "lucide-react";
 import { Github, Linkedin, Mail, Phone } from "lucide-react";
 import { skills_arr } from "../../public/skills";
 
-const linkedInUrl = "https://www.linkedin.com/in/hitanshu-gajjar-97a217180/";
+const linkedInUrl = "https://www.linkedin.com/in/hitanshu-gajjar/";
 const githubUrl = "https://github.com/HItanshuGajjar";
-const mailUrl = "mailto:" + "gajjarh71@gmail.com";
+const mailUrl = "mailto:" + "hitanshu.hexxum@gmail.com";
 const mailUrl2 =
   "https://mail.google.com/mail/?view=cm&fs=1&to=gajjarh71@gmail.com";
 const telUrl = "tel:+917048513354";
@@ -94,12 +94,12 @@ export default function Home() {
             fontWeight="medium"
             className="opacity-90 mt-2 md:mt-1"
           >
-            {`React Native Developer & Project Lead`}
+            {`Senior Software Engineer – React Native & Frontend`}
           </CText>
 
           <CText baseSize={18} className="opacity-50 mt-4 md:mt-8">
-            I craft seamless, intuitive, and impactful <br />
-            mobile solutions with a global perspective.
+          Crafting high-performance, <br/> 
+          intuitive mobile apps and website with a global mindset.
           </CText>
         </div>
 
@@ -180,14 +180,14 @@ export default function Home() {
           >
             <Linkedin className="w-6 h-6" />
           </Link>
-          <Link
+          {/* <Link
             href={telUrl}
             className="opacity-70 hover:opacity-100 transition-colors"
             aria-label="LinkedIn Profile"
             target="_blank"
           >
             <Phone className="w-6 h-6" />
-          </Link>
+          </Link> */}
         </div>
       </div>
 
@@ -214,29 +214,34 @@ export default function Home() {
             </CText>
 
             <CText baseSize={14} className="opacity-80 sm:text-base md:text-lg">
-              My name is Hitanshu Gajjar, and I bring 7.5 years of experience in
-              the tech industry. My career began in late 2016 as an Android
-              Application Developer, a role I dedicated myself to for 2.5 years.
-              During this time, I developed a deep understanding of mobile app
-              development, which laid the foundation for my future endeavors.
+              I’m Hitanshu Gajjar, a Frontend-focused Software Engineer with
+              over 7 years of experience in building robust and scalable
+              applications. My journey began in late 2016 as an Android
+              Developer, where I spent 2.5 years honing core mobile development
+              skills. This foundation eventually led me to specialize in React
+              Native from mid-2019, enabling me to create high-performance,
+              cross-platform mobile apps that meet modern business needs.
               <br />
+              {/* <br /> */}
+              Over the years, I’ve worked across a wide range of industries,
+              collaborating with international clients and cross-functional
+              teams including designers, testers, and developers from diverse
+              backgrounds. My experience spans both full-time roles and
+              contract-based projects, giving me a comprehensive understanding
+              of project dynamics and stakeholder communication.
               <br />
-              In mid-2019, I transitioned to React Native, where I have since
-              specialized in building cross-platform mobile applications. My
-              work has spanned various industries and involved collaborating
-              with overseas clients, as well as developers, designers, and
-              testers from diverse backgrounds. This international experience
-              has refined my ability to adapt to different project needs and
-              deliver high-quality solutions.
+              {/* <br /> */}
+              While React Native remains my core focus, I’m also proficient in
+              frontend web technologies such as React.js and Next.js, and have
+              hands-on experience with backend tools including Node.js, MongoDB,
+              and MySQL. In addition to my technical work, I’ve led teams and
+              managed projects for over 3 years — blending coding expertise with
+              leadership and strategic planning.
               <br />
-              <br />
-              While React Native remains my primary focus, I have also explored
-              other technologies, including NodeJS, ReactJS, NextJS, MongoDB,
-              and MySQL. In addition to development, I managed projects for
-              three years, balancing technical work with leadership
-              responsibilities. This blend of hands-on development and project
-              management has equipped me with a unique skill set that I bring to
-              every project.
+              {/* <br /> */}
+              My approach emphasizes performance, usability, and clean,
+              maintainable code — whether I’m tackling a startup MVP or
+              contributing to large-scale applications.
             </CText>
           </div>
 
@@ -277,6 +282,41 @@ export default function Home() {
                 <ExperienceItemCard {...item} />
               </div>
             ))}
+          </div>
+
+          <div className="grid gap-6 md:gap-2 mt-10">
+            <CText baseSize={24} className="sm:text-3xl md:text-4xl">
+              {`Contract-Based Software Development (2019-2022)`}
+            </CText>
+
+            <CText baseSize={14} className="opacity-80 sm:text-base md:text-lg">
+              Between 2019 and 2022, I worked as a contract-based developer,
+              delivering tailored mobile solutions to clients in varied sectors
+              such as education, e-commerce, and logistics. After transitioning
+              from native Android development to React Native, I focused on
+              building efficient, user-friendly, and cross-platform applications
+              designed to meet diverse business objectives.
+              <br />
+              Throughout this period, I handled full project lifecycles—taking
+              ownership of projects from architectural planning and coding to
+              deployment and ongoing maintenance. My technical toolkit included
+              React Native, real-time databases, Firebase integration, and
+              payment gateways like Razorpay and Paytm. I also connected with
+              PHP-based backend services to provide end-to-end solutions for
+              client requirements.
+              <br />A key aspect of my contract work was the close coordination
+              with international clients and distributed teams. By leveraging
+              tools such as Figma, Postman, and VS Code, I ensured smooth
+              workflows across development, design, and testing. Alongside
+              hands-on coding, I led small teams, mentored junior developers,
+              and maintained clean, structured Git workflows to keep codebases
+              efficient and maintainable.
+              <br />
+              This experience greatly enhanced my versatility, strengthened my
+              communication skills with global stakeholders, and reinforced my
+              ability to independently deliver production-ready software in
+              fast-paced and dynamic environments.
+            </CText>
           </div>
         </section>
 

@@ -15,8 +15,22 @@ export const skills_arr = [
 
   // UI/UX Design Tools
   "NativeBase",
+  "Tailwind CSS",
+
+  // Generative AI
+  "Generative AI",
+  "OpenAI",
+  "Gemini",
+  "Claude",
+  "Google AI",
+  "Anthropic",
 
   // Testing Libraries
+  "Jest",
+  "React Testing Library",
+  "Enzyme",
+  "Mocha",
+  "Chai",
 
   // Native Development (iOS/Android)
   "Swift",
