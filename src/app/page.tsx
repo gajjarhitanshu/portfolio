@@ -1,9 +1,12 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Github, Linkedin, Mail, Code2 } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Github, Linkedin, Mail } from "lucide-react";
+import dynamic from "next/dynamic";
+
+const ThreeBackground = dynamic(() => import("@/components/ThreeBackground"), { ssr: false });
 
 /* ─────────────────────────────────────── DATA ───────────────────────────── */
 
@@ -169,118 +172,134 @@ function Navbar() {
 /* ─────────────────────────────── HERO ──────────────────────────────────── */
 
 function HeroSection() {
-  const words = ["Crafting", "high-performance,", "intuitive", "mobile &", "web", "experiences..."];
-
   return (
-    <section className="relative min-h-screen flex flex-col justify-center pt-20 overflow-hidden">
-      {/* dot grid — right side */}
-      <div className="absolute right-0 top-0 w-[340px] h-full dot-grid opacity-[0.07] pointer-events-none" />
-      {/* purple right border */}
+    <section className="relative min-h-screen flex items-center overflow-hidden">
+
+      {/* ── Three.js canvas fills the whole hero ── */}
+      <ThreeBackground />
+
+      {/* left-side readability gradient */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(100deg, rgba(12,12,20,0.92) 0%, rgba(12,12,20,0.70) 42%, rgba(12,12,20,0.15) 68%, transparent 85%)",
+        }}
+      />
+      {/* bottom fade into page */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
+        style={{ background: "linear-gradient(to bottom, transparent, #0c0c14)" }}
+      />
+
+      {/* purple right accent */}
       <div className="side-border-right" />
 
-      <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-12 lg:gap-8 items-center">
+      {/* ── Content ── */}
+      <div className="container relative z-10 pt-20">
+        <div className="max-w-[520px]">
 
-          {/* ── left ── */}
-          <div>
-            {/* status badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded-full border border-teal-400/25 bg-teal-400/8"
-              style={{ background: "rgba(94,234,212,0.07)" }}
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse" />
-              <span className="mono-label text-[10px]">Available for new opportunities</span>
-            </motion.div>
+          {/* status */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: 0.15 }}
+            className="inline-flex items-center gap-2 mb-8"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse" />
+            <span className="mono-label text-[10px] text-white/50 tracking-[0.2em]">
+              AVAILABLE FOR NEW OPPORTUNITIES
+            </span>
+          </motion.div>
 
-            {/* headline — word-by-word reveal */}
-            <h1 className="font-display font-extrabold leading-[1.05] mb-6" style={{ fontSize: "clamp(2.6rem,5.5vw,4.2rem)" }}>
-              {words.map((word, i) => (
-                <motion.span
-                  key={i}
-                  className={`inline-block mr-[0.28em] ${word === "intuitive" ? "teal-text" : "text-white"}`}
-                  initial={{ opacity: 0, y: 32 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.2 + i * 0.09 }}
-                >
-                  {word}
-                </motion.span>
-              ))}
-            </h1>
-
-            {/* subtitle */}
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.82 }}
-              className="text-white/50 text-base leading-relaxed max-w-md mb-8 font-body"
-            >
-              Senior Software Engineer with a global mindset and 7 years of real-world engineering across 3 countries.
-            </motion.p>
-
-            {/* role tags */}
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.92 }}
-              className="flex flex-wrap gap-2 mb-10"
-            >
-              {["React Native Engineer", "Frontend Architect", "Mobile Performance Lead", "AI Integration Specialist"].map((r) => (
-                <span key={r} className="role-tag">{r}</span>
-              ))}
-            </motion.div>
-
-            {/* CTAs */}
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1.02 }}
-              className="flex flex-wrap gap-4"
-            >
-              <Link href="#projects" className="btn-primary">
-                View Projects <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-              <Link href="#contact" className="btn-ghost">
-                Contact Me
-              </Link>
-            </motion.div>
-          </div>
-
-          {/* ── right — stats grid ── */}
-          <div className="grid grid-cols-2 gap-3">
-            {STATS.map((s, i) => (
+          {/* name — two-line stagger */}
+          <div className="mb-5 overflow-hidden">
+            {["Hitanshu", "Gajjar"].map((word, i) => (
               <motion.div
-                key={s.label}
-                className="stat-box"
-                initial={{ opacity: 0, scale: 0.88 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.55 + i * 0.1 }}
+                key={word}
+                initial={{ y: "100%", opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: 0.28 + i * 0.12 }}
+                className="block font-display font-extrabold leading-[0.95] tracking-tight"
+                style={{ fontSize: "clamp(3.4rem, 7vw, 5.2rem)" }}
               >
-                <p className="font-display font-extrabold text-teal-400 mb-1"
-                  style={{ fontSize: "clamp(1.8rem,3.5vw,2.4rem)" }}>
-                  <Counter target={s.value} suffix={s.suffix} />
-                </p>
-                <p className="mono-label text-[9px] text-white/35">{s.label}</p>
+                <span className={i === 1 ? "teal-text" : "text-white"}>{word}</span>
               </motion.div>
             ))}
           </div>
+
+          {/* role line */}
+          <motion.p
+            initial={{ opacity: 0, x: -12 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            className="mono-label text-[11px] text-teal-400/70 mb-5 tracking-[0.22em]"
+          >
+            SENIOR SOFTWARE ENGINEER · REACT NATIVE &amp; FRONTEND
+          </motion.p>
+
+          {/* tagline */}
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.72 }}
+            className="text-white/45 text-[15px] leading-relaxed mb-8 font-body"
+          >
+            Crafting high-performance, intuitive mobile &amp; web experiences
+            with 7 years of real-world engineering across 3 countries.
+          </motion.p>
+
+          {/* stats — minimal horizontal strip */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.88 }}
+            className="flex flex-wrap items-center gap-x-6 gap-y-2 mb-10"
+          >
+            {STATS.map((s, i) => (
+              <React.Fragment key={s.label}>
+                <div className="flex flex-col">
+                  <span className="font-display font-extrabold text-teal-400 leading-none"
+                    style={{ fontSize: "clamp(1.2rem,2vw,1.5rem)" }}>
+                    <Counter target={s.value} suffix={s.suffix} />
+                  </span>
+                  <span className="mono-label text-[8px] text-white/28 mt-0.5">{s.label}</span>
+                </div>
+                {i < STATS.length - 1 && (
+                  <span className="w-px h-7 bg-white/10 hidden sm:block" />
+                )}
+              </React.Fragment>
+            ))}
+          </motion.div>
+
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: 1.02 }}
+            className="flex flex-wrap gap-3"
+          >
+            <Link href="#projects" className="btn-primary">
+              View Projects <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+            <Link href="#contact" className="btn-ghost">
+              Contact Me
+            </Link>
+          </motion.div>
         </div>
       </div>
 
-      {/* subtle scroll hint */}
+      {/* scroll cue */}
       <motion.div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-30"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.3 }}
+        animate={{ opacity: 0.35 }}
         transition={{ delay: 1.6 }}
       >
-        <span className="mono-label text-[9px] text-white/40">SCROLL</span>
         <motion.div
-          className="w-px h-8 bg-gradient-to-b from-white/40 to-transparent"
-          animate={{ scaleY: [1, 0.4, 1] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+          className="w-px h-10 bg-gradient-to-b from-teal-400/50 to-transparent"
+          animate={{ scaleY: [1, 0.35, 1], opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         />
       </motion.div>
     </section>
