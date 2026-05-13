@@ -2,78 +2,170 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── base ── */
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --teal: #5eead4;
+  --teal-dim: rgba(94, 234, 212, 0.6);
+  --bg: #0f1923;
+  --bg2: #131f2b;
+  --surface: rgba(255, 255, 255, 0.035);
+  --border: rgba(255, 255, 255, 0.09);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background-color: #263238;
-  color: white !important;
+  background-color: var(--bg);
+  color: white;
+  font-family: inherit;
+}
+
+/* ── custom scrollbar ── */
+::-webkit-scrollbar {
+  width: 0;
+  display: none;
+}
+
+/* ── gradient text ── */
+.hero-gradient-text {
+  background: linear-gradient(135deg, #5eead4 0%, #818cf8 60%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── skill chip ── */
+.skill-chip {
+  display: inline-block;
+  padding: 3px 10px;
+  font-size: 11px;
+  color: rgba(94, 234, 212, 0.85);
+  background: rgba(94, 234, 212, 0.08);
+  border: 1px solid rgba(94, 234, 212, 0.2);
+  border-radius: 9999px;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+}
+
+.skill-chip:hover {
+  background: rgba(94, 234, 212, 0.18);
+  border-color: rgba(94, 234, 212, 0.45);
+  color: #5eead4;
+}
+
+/* ── typewriter cursor blink ── */
+.typewriter-cursor {
+  display: inline-block;
+  margin-left: 1px;
+  animation: blink 0.9s step-start infinite;
+  color: #5eead4;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ── glass-effect (keep for compat) ── */
+.glass-effect {
+  background: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0);
+  border-radius: 1rem;
+  transition: all 0.3s ease-in-out;
+}
+.glass-effect:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* ── legacy chip (keep for compat) ── */
+.chip {
+  display: inline-block;
+  padding: 3px 10px;
+  font-size: 11px;
+  color: rgba(94, 234, 212, 0.85);
+  background: rgba(94, 234, 212, 0.08);
+  border: 1px solid rgba(94, 234, 212, 0.2);
+  border-radius: 9999px;
+  margin: 3px;
+  transition: all 0.2s ease;
+}
+.chip:hover {
+  background: rgba(94, 234, 212, 0.18);
+  border-color: rgba(94, 234, 212, 0.4);
+}
+
+/* ── floating orb pulse (used via JS from RadialGradient) ── */
+@keyframes orb-drift {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(20px, -15px); }
+  66% { transform: translate(-10px, 20px); }
+}
+
+/* ── section transitions ── */
+section {
+  transition: opacity 0.2s;
+}
+
+/* ── project card glow on hover ── */
+.project-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(94,234,212,0.25), rgba(129,140,248,0.15));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.project-card:hover::after {
+  opacity: 1;
+}
+
+/* ── experience card ── */
+.experience-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(94,234,212,0.2), transparent 70%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.experience-card:hover::after {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .project-card::after,
+  .experience-card::after {
+    opacity: 0.4;
+  }
+}
+
+/* ── utility ── */
+.dynamic-height {
+  height: calc(100vh - 80px);
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
-  }
-}
-
-.dynamic-height {
-  height: calc(100vh - 80px); /* Adjust the header height here */
-}
-
-.glass-effect {
-  background: rgba(255, 255, 255, 0); /* Transparent background */
-  backdrop-filter: blur(20px); /* Blur effect */
-  border: 1px solid rgba(255, 255, 255, 0); /* Border with transparency */
-  border-radius: 0.5rem; /* Rounded corners */
-  transition: all 0.3s ease-in-out; /* Smooth transitions */
-}
-
-.glass-effect:hover {
-  background: rgba(255, 255, 255, 0.1); /* More opacity on hover */
-  backdrop-filter: blur(30px); /* More blur on hover */
-  border: 1px solid rgba(255, 255, 255, 0.4); /* Slightly thicker border on hover */
-}
-
-.chip {
-  display: inline-block;
-  padding: 0.4rem 1rem;
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.8);
-  background: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 9999px; /* Full pill shape */
-  margin: 4px; /* Space between chips */
-  transition: all 0.3s ease;
-}
-
-.chip:hover {
-  background: rgba(255, 255, 255, 0.3);
-  color: white;
-  border-color: rgba(255, 255, 255, 0.6); /* Stronger border on hover */
-}
-
-.chip-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px; /* Space between the chips */
-}
-
-@media screen and (max-width: 768px) {
-  .glass-effect {
-    background: rgba(255, 255, 255, 0.05); /* More opacity on hover */
-    backdrop-filter: blur(30px); /* More blur on hover */
-    border: 1px solid rgba(255, 255, 255, 0.4); /* Slightly thicker border on hover */
   }
 }

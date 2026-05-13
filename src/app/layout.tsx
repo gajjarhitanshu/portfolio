@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import BaseColors from "../../public/colors";
 import MainLayout from "@/components/MainLayout";
 import RadialGradient from "@/components/RadialGradient/RadialGradient";
+import CustomCursor from "@/components/CustomCursor";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Hitanshu Gajjar",
-  description: "React Native Developer",
+  description: "Senior Software Engineer – React Native & Frontend",
 };
 
 export default function RootLayout({
@@ -20,6 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
+        <CustomCursor />
         <MainLayout>{children}</MainLayout>
         <RadialGradient />
       </body>

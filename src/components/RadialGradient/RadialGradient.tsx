@@ -1,55 +1,40 @@
 "use client";
-import React, { useEffect, useState } from "react";
-
-const colorCombinations = [
-  "#004080, #003366",
-  "#5e2a77, #3f0071",
-  "#003d99, #002d72",
-  "#004366, #00234d",
-];
+import React, { useEffect, useRef } from "react";
 
 const RadialGradient = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleMouseMovement = (event: MouseEvent) => {
-      const windowWidth = window.innerWidth;
-      const windowHeight = window.innerHeight;
-
-      const mouseXPercentage = Math.round((event.pageX / windowWidth) * 100);
-      const mouseYPercentage = Math.round((event.pageY / windowHeight) * 100);
-      setMousePosition({ x: mouseXPercentage, y: mouseYPercentage });
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!ref.current) return;
+      const xPct = Math.round((e.pageX / window.innerWidth) * 100);
+      const yPct = Math.round((e.pageY / window.innerHeight) * 100);
+      ref.current.style.backgroundImage = `
+        radial-gradient(ellipse 80% 60% at ${xPct}% ${yPct}%, rgba(15,40,60,0.9) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at ${100 - xPct}% ${100 - yPct}%, rgba(30,20,55,0.7) 0%, transparent 60%)
+      `;
     };
 
-    document.addEventListener("mousemove", handleMouseMovement);
-
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMovement);
-    };
+    document.addEventListener("mousemove", handleMouseMove);
+    return () => document.removeEventListener("mousemove", handleMouseMove);
   }, []);
-
-  const gradientStyle = {
-    backgroundImage: `radial-gradient(at ${mousePosition.x}% ${mousePosition.y}%, ${colorCombinations[3]})`,
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    zIndex: -1,
-  };
 
   return (
     <div
+      ref={ref}
       style={{
-        backgroundImage: `radial-gradient(at ${mousePosition.x}% ${mousePosition.y}%, ${colorCombinations[3]})`,
+        backgroundImage:
+          "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(15,40,60,0.9) 0%, transparent 70%)",
+        backgroundColor: "#0f1923",
         position: "fixed",
         top: 0,
         left: 0,
         width: "100%",
         height: "100%",
         zIndex: -1,
+        transition: "background-image 0.15s ease",
       }}
-    ></div>
+    />
   );
 };
 
