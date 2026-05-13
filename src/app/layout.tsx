@@ -1,28 +1,39 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Syne, Space_Mono, Inter } from "next/font/google";
 import "./globals.css";
-import MainLayout from "@/components/MainLayout";
-import RadialGradient from "@/components/RadialGradient/RadialGradient";
 import CustomCursor from "@/components/CustomCursor";
 
-const inter = Inter({ subsets: ["latin"] });
+const syne = Syne({
+  subsets: ["latin"],
+  variable: "--font-syne",
+  weight: ["400", "600", "700", "800"],
+});
+
+const spaceMono = Space_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  weight: ["400", "700"],
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
 
 export const metadata: Metadata = {
-  title: "Hitanshu Gajjar",
-  description: "Senior Software Engineer – React Native & Frontend",
+  title: "Hitanshu Gajjar — Senior Software Engineer",
+  description:
+    "Senior Software Engineer specialising in React Native, Frontend Architecture, and AI-integrated applications.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.className}`}>
+    <html lang="en" className={`${syne.variable} ${spaceMono.variable} ${inter.variable}`}>
+      <body>
         <CustomCursor />
-        <MainLayout>{children}</MainLayout>
-        <RadialGradient />
+        {children}
       </body>
     </html>
   );
