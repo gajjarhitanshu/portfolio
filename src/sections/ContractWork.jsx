@@ -1,3 +1,5 @@
+import useIsMobile from '../hooks/useIsMobile'
+
 const PARAGRAPHS = [
   'Between 2019 and 2022, I worked as a contract-based developer, delivering tailored mobile solutions to clients in varied sectors such as education, e-commerce, and logistics. After transitioning from native Android development to React Native, I focused on building efficient, user-friendly, and cross-platform applications designed to meet diverse business objectives.',
   'Throughout this period, I handled full project lifecycles — taking ownership from architectural planning and coding to deployment and ongoing maintenance. My toolkit included React Native, Firebase integration, and payment gateways like Razorpay and Paytm. I also connected with PHP-based backend services to provide end-to-end solutions for client requirements.',
@@ -12,12 +14,13 @@ const HIGHLIGHTS = [
 ]
 
 export default function ContractWork() {
+  const isMobile = useIsMobile()
   return (
     <section
       id="contract"
       style={{
         background: 'var(--cream)',
-        padding: '100px 60px',
+        padding: isMobile ? '80px 20px' : '100px 60px',
         position: 'relative',
         overflow: 'hidden',
       }}
@@ -123,8 +126,8 @@ export default function ContractWork() {
         {/* Prose columns */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '40px',
+          gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+          gap: isMobile ? '24px' : '40px',
           borderTop: '1px solid rgba(13,13,16,0.1)',
           paddingTop: '48px',
         }}>

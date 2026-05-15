@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { EXPERIENCE } from '../data'
+import useIsMobile from '../hooks/useIsMobile'
 
 function ExperienceRow({ job, index }) {
   const [hovered, setHovered] = useState(false)
+  const isMobile = useIsMobile()
 
   return (
     <div
@@ -116,8 +118,8 @@ function ExperienceRow({ job, index }) {
         {/* Highlights + stack */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1fr auto',
-          gap: '40px',
+          gridTemplateColumns: isMobile ? '1fr' : '1fr auto',
+          gap: isMobile ? '16px' : '40px',
           alignItems: 'start',
         }}>
           <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -136,7 +138,7 @@ function ExperienceRow({ job, index }) {
             ))}
           </ul>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', alignItems: 'flex-end' }}>
+          <div style={{ display: 'flex', flexDirection: isMobile ? 'row' : 'column', flexWrap: 'wrap', gap: '6px', alignItems: isMobile ? 'flex-start' : 'flex-end' }}>
             {job.stack.map(t => (
               <span key={t} style={{
                 fontFamily: 'var(--font-mono)',

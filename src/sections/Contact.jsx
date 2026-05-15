@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom'
 import { META, LINKS } from '../data'
+import useIsMobile from '../hooks/useIsMobile'
 
 export default function Contact() {
+  const isMobile = useIsMobile()
   return (
     <section
       id="contact"
       style={{
         background: 'var(--ink)',
-        padding: '100px 60px 60px',
+        padding: isMobile ? '80px 20px 48px' : '100px 60px 60px',
         borderTop: '1px solid var(--ink-muted)',
       }}
     >
@@ -58,8 +60,8 @@ export default function Contact() {
       {/* Footer grid */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: '1fr auto auto auto',
-        gap: '48px',
+        gridTemplateColumns: isMobile ? '1fr 1fr' : '1fr auto auto auto',
+        gap: isMobile ? '32px' : '48px',
         borderTop: '1px solid var(--ink-muted)',
         paddingTop: '48px',
         alignItems: 'start',

@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { FEATURED } from '../data'
+import useIsMobile from '../hooks/useIsMobile'
 
 // CSS isometric cube matching the design's upper-right decoration
 function IsoCube() {
@@ -46,6 +47,7 @@ function IsoCube() {
 function FirstCard({ project }) {
   const cardRef = useRef(null)
   const rafRef = useRef(null)
+  const isMobile = useIsMobile()
 
   const handleMouseMove = (e) => {
     const el = cardRef.current
@@ -77,7 +79,7 @@ function FirstCard({ project }) {
         cursor: 'none',
         overflow: 'hidden',
         gridColumn: '1',
-        gridRow: '1 / span 2',
+        gridRow: isMobile ? 'auto' : '1 / span 2',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
@@ -282,6 +284,7 @@ function ProjectCard({ project, index }) {
 }
 
 export default function Work() {
+  const isMobile = useIsMobile()
   // first card + next 2 in tall-left layout, then last 3 in 3-col row
   const [first, ...rest] = FEATURED
   const topRight = rest.slice(0, 2)
@@ -319,7 +322,7 @@ export default function Work() {
       {/* Top section: tall orange card + 2 stacked dark cards */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
+        gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
         gridTemplateRows: 'auto auto',
         gap: '12px',
         marginBottom: '12px',
@@ -333,7 +336,7 @@ export default function Work() {
       {/* Bottom row: 3 equal cards */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
+        gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
         gap: '12px',
       }}>
         {bottomRow.map((project, i) => (

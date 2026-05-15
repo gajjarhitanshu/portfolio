@@ -2,10 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Hero3D from '../components/Hero3D'
 import { META, ROLES } from '../data'
+import useIsMobile from '../hooks/useIsMobile'
 
 export default function Hero() {
   const [roleIndex, setRoleIndex] = useState(0)
   const [visible, setVisible] = useState(true)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -54,9 +56,9 @@ export default function Hero() {
       <div style={{
         position: 'absolute',
         top: '80px',
-        left: '32px',
-        right: '32px',
-        display: 'flex',
+        left: isMobile ? '20px' : '32px',
+        right: isMobile ? '20px' : '32px',
+        display: isMobile ? 'none' : 'flex',
         justifyContent: 'space-between',
       }}>
         <div className="hero-fade" style={{ animationDelay: '0.1s', opacity: 0 }}>
@@ -78,14 +80,16 @@ export default function Hero() {
       </div>
 
       {/* Hero divider line */}
-      <div style={{
-        position: 'absolute',
-        bottom: '160px',
-        left: '32px',
-        right: '32px',
-        height: '1px',
-        background: 'rgba(245,241,232,0.1)',
-      }} />
+      {!isMobile && (
+        <div style={{
+          position: 'absolute',
+          bottom: '160px',
+          left: '32px',
+          right: '32px',
+          height: '1px',
+          background: 'rgba(245,241,232,0.1)',
+        }} />
+      )}
 
       {/* Giant name */}
       <div style={{
@@ -116,13 +120,14 @@ export default function Hero() {
       {/* Bottom bar */}
       <div style={{
         position: 'absolute',
-        bottom: '32px',
-        left: '32px',
-        right: '32px',
+        bottom: isMobile ? '24px' : '32px',
+        left: isMobile ? '20px' : '32px',
+        right: isMobile ? '20px' : '32px',
         display: 'flex',
-        alignItems: 'flex-end',
+        flexDirection: isMobile ? 'column' : 'row',
+        alignItems: isMobile ? 'flex-start' : 'flex-end',
         justifyContent: 'space-between',
-        gap: '24px',
+        gap: isMobile ? '16px' : '24px',
       }}>
         {/* Left — availability + tagline */}
         <div style={{ maxWidth: '340px' }} className="hero-fade" data-delay="0.4">
@@ -151,7 +156,7 @@ export default function Hero() {
         </div>
 
         {/* Center — currently scroll */}
-        <div style={{ textAlign: 'center', flexShrink: 0 }}>
+        <div style={{ textAlign: isMobile ? 'left' : 'center', flexShrink: 0 }}>
           <div style={{
             fontFamily: 'var(--font-mono)',
             fontSize: '0.6rem',
@@ -182,7 +187,7 @@ export default function Hero() {
         </div>
 
         {/* Right — CTAs */}
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexShrink: 0 }}>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexShrink: 0, flexWrap: 'wrap' }}>
           <Link to="/projects" className="pill pill-outline">
             SEE THE WORK ↗
           </Link>

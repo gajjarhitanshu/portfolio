@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { META } from '../data'
+import useIsMobile from '../hooks/useIsMobile'
 
 const HOME_LINKS = [
   { label: 'About', href: '#about' },
@@ -20,6 +21,8 @@ export default function Nav() {
   const isProjects = location.pathname === '/projects'
   const [active, setActive] = useState('')
   const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const isMobile = useIsMobile()
 
   const links = isProjects ? PROJECTS_LINKS : HOME_LINKS
 
@@ -48,124 +51,170 @@ export default function Nav() {
   }
 
   return (
-    <nav style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      zIndex: 100,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      padding: '0 32px',
-      height: '64px',
-      background: scrolled ? 'rgba(13,13,16,0.9)' : 'transparent',
-      backdropFilter: scrolled ? 'blur(12px)' : 'none',
-      borderBottom: scrolled ? '1px solid rgba(255,255,255,0.05)' : 'none',
-      transition: 'background 0.3s ease, backdrop-filter 0.3s ease, border 0.3s ease',
-    }}>
-      {/* Logo */}
-      <Link to="/" style={{
-        fontFamily: 'var(--font-mono)',
-        fontSize: '0.72rem',
-        letterSpacing: '0.1em',
-        textTransform: 'uppercase',
-        color: 'var(--cream)',
+    <>
+      <nav style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 100,
         display: 'flex',
         alignItems: 'center',
-        gap: '8px',
-        whiteSpace: 'nowrap',
+        justifyContent: 'space-between',
+        padding: isMobile ? '0 20px' : '0 32px',
+        height: '64px',
+        background: scrolled || menuOpen ? 'rgba(13,13,16,0.95)' : 'transparent',
+        backdropFilter: scrolled || menuOpen ? 'blur(12px)' : 'none',
+        borderBottom: scrolled || menuOpen ? '1px solid rgba(255,255,255,0.05)' : 'none',
+        transition: 'background 0.3s ease, backdrop-filter 0.3s ease, border 0.3s ease',
       }}>
-        <span style={{
-          width: '8px',
-          height: '8px',
-          borderRadius: '50%',
-          background: 'var(--accent)',
-          display: 'inline-block',
-          flexShrink: 0,
-        }} />
-        {META.logo}
-      </Link>
+        {/* Logo */}
+        <Link to="/" style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: '0.72rem',
+          letterSpacing: '0.1em',
+          textTransform: 'uppercase',
+          color: 'var(--cream)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          whiteSpace: 'nowrap',
+        }}>
+          <span style={{
+            width: '8px', height: '8px',
+            borderRadius: '50%',
+            background: 'var(--accent)',
+            display: 'inline-block',
+            flexShrink: 0,
+          }} />
+          {META.logo}
+        </Link>
 
-      {/* Center links */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '2px',
-        background: 'rgba(255,255,255,0.04)',
-        border: '1px solid rgba(255,255,255,0.08)',
-        borderRadius: '999px',
-        padding: '4px',
-      }}>
-        {isProjects && (
-          <>
-            <Link to="/" style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.68rem',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              padding: '6px 14px',
-              borderRadius: '999px',
-              color: 'var(--cream-muted)',
-              transition: 'var(--transition-fast)',
-              whiteSpace: 'nowrap',
-            }}>
-              ↖ Home
-            </Link>
-            <div style={{ width: '1px', height: '16px', background: 'rgba(255,255,255,0.12)' }} />
-          </>
+        {/* Desktop: center pill nav */}
+        {!isMobile && (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '2px',
+            background: 'rgba(255,255,255,0.04)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            borderRadius: '999px',
+            padding: '4px',
+          }}>
+            {isProjects && (
+              <>
+                <Link to="/" style={{
+                  fontFamily: 'var(--font-mono)', fontSize: '0.68rem', letterSpacing: '0.08em',
+                  textTransform: 'uppercase', padding: '6px 14px', borderRadius: '999px',
+                  color: 'var(--cream-muted)', transition: 'var(--transition-fast)', whiteSpace: 'nowrap',
+                }}>↖ Home</Link>
+                <div style={{ width: '1px', height: '16px', background: 'rgba(255,255,255,0.12)' }} />
+              </>
+            )}
+            {links.map(l => (
+              <a key={l.href} href={l.href} onClick={e => handleAnchor(e, l.href)} style={{
+                fontFamily: 'var(--font-mono)', fontSize: '0.68rem', letterSpacing: '0.08em',
+                textTransform: 'uppercase', padding: '6px 14px', borderRadius: '999px',
+                color: active === l.href ? 'var(--ink)' : 'var(--cream-muted)',
+                background: active === l.href ? 'var(--cream)' : 'transparent',
+                transition: 'var(--transition-fast)', whiteSpace: 'nowrap',
+              }}>{l.label}</a>
+            ))}
+            {!isProjects && (
+              <>
+                <div style={{ width: '1px', height: '16px', background: 'rgba(255,255,255,0.12)' }} />
+                <Link to="/projects" style={{
+                  fontFamily: 'var(--font-mono)', fontSize: '0.68rem', letterSpacing: '0.08em',
+                  textTransform: 'uppercase', padding: '6px 14px', borderRadius: '999px',
+                  background: 'rgba(255,107,61,0.15)', border: '1px solid rgba(255,107,61,0.3)',
+                  color: 'var(--cream)', transition: 'var(--transition-fast)', whiteSpace: 'nowrap',
+                }}>All Projects ↗</Link>
+              </>
+            )}
+          </div>
         )}
-        {links.map(l => (
-          <a
-            key={l.href}
-            href={l.href}
-            onClick={e => handleAnchor(e, l.href)}
+
+        {/* Desktop: CTA */}
+        {!isMobile && (
+          <a href="mailto:hitanshu.hexxum@gmail.com" className="pill pill-outline" style={{ fontSize: '0.65rem' }}>
+            Get in Touch ↗
+          </a>
+        )}
+
+        {/* Mobile: hamburger */}
+        {isMobile && (
+          <button
+            onClick={() => setMenuOpen(o => !o)}
             style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.68rem',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              padding: '6px 14px',
-              borderRadius: '999px',
-              color: active === l.href ? 'var(--ink)' : 'var(--cream-muted)',
-              background: active === l.href ? 'var(--cream)' : 'transparent',
-              transition: 'var(--transition-fast)',
-              whiteSpace: 'nowrap',
+              background: 'none', border: 'none', padding: '8px',
+              display: 'flex', flexDirection: 'column', gap: '5px',
+              cursor: 'pointer',
             }}
           >
-            {l.label}
-          </a>
-        ))}
-        {!isProjects && (
-          <>
-            <div style={{ width: '1px', height: '16px', background: 'rgba(255,255,255,0.12)' }} />
-            <Link to="/projects" style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.68rem',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              padding: '6px 14px',
-              borderRadius: '999px',
-              background: 'rgba(255,107,61,0.15)',
-              border: '1px solid rgba(255,107,61,0.3)',
-              color: 'var(--cream)',
-              transition: 'var(--transition-fast)',
-              whiteSpace: 'nowrap',
-            }}>
-              All Projects ↗
-            </Link>
-          </>
+            <span style={{
+              display: 'block', width: '22px', height: '2px',
+              background: 'var(--cream)',
+              transition: 'transform 0.25s, opacity 0.25s',
+              transform: menuOpen ? 'translateY(7px) rotate(45deg)' : 'none',
+            }} />
+            <span style={{
+              display: 'block', width: '22px', height: '2px',
+              background: 'var(--cream)',
+              opacity: menuOpen ? 0 : 1,
+              transition: 'opacity 0.25s',
+            }} />
+            <span style={{
+              display: 'block', width: '22px', height: '2px',
+              background: 'var(--cream)',
+              transition: 'transform 0.25s, opacity 0.25s',
+              transform: menuOpen ? 'translateY(-7px) rotate(-45deg)' : 'none',
+            }} />
+          </button>
         )}
-      </div>
+      </nav>
 
-      {/* CTA */}
-      <a
-        href="mailto:hitanshu.hexxum@gmail.com"
-        className="pill pill-outline"
-        style={{ fontSize: '0.65rem' }}
-      >
-        Get in Touch ↗
-      </a>
-    </nav>
+      {/* Mobile full-screen menu */}
+      {isMobile && (
+        <div style={{
+          position: 'fixed', inset: 0, zIndex: 99,
+          background: 'var(--ink)',
+          display: 'flex', flexDirection: 'column',
+          justifyContent: 'center', alignItems: 'center',
+          gap: '8px',
+          transform: menuOpen ? 'translateY(0)' : 'translateY(-100%)',
+          transition: 'transform 0.35s cubic-bezier(0.16,1,0.3,1)',
+          paddingTop: '80px',
+        }}>
+          {isProjects && (
+            <Link to="/" onClick={() => setMenuOpen(false)} style={{
+              fontFamily: 'var(--font-sans)', fontWeight: 700,
+              fontSize: '2rem', letterSpacing: '-0.02em',
+              color: 'var(--cream-muted)', padding: '12px 0',
+            }}>← Home</Link>
+          )}
+          {links.map(l => (
+            <a key={l.href} href={l.href} onClick={e => { handleAnchor(e, l.href); setMenuOpen(false) }} style={{
+              fontFamily: 'var(--font-sans)', fontWeight: 700,
+              fontSize: '2rem', letterSpacing: '-0.02em',
+              color: active === l.href ? 'var(--accent)' : 'var(--cream)',
+              padding: '12px 0',
+            }}>{l.label}</a>
+          ))}
+          {!isProjects && (
+            <Link to="/projects" onClick={() => setMenuOpen(false)} style={{
+              fontFamily: 'var(--font-sans)', fontWeight: 700,
+              fontSize: '2rem', letterSpacing: '-0.02em',
+              color: 'var(--accent)', padding: '12px 0',
+            }}>All Projects ↗</Link>
+          )}
+          <a href="mailto:hitanshu.hexxum@gmail.com" onClick={() => setMenuOpen(false)} style={{
+            marginTop: '24px',
+            fontFamily: 'var(--font-mono)', fontSize: '0.75rem',
+            letterSpacing: '0.1em', textTransform: 'uppercase',
+            color: 'var(--cream-muted)',
+          }}>hitanshu.hexxum@gmail.com</a>
+        </div>
+      )}
+    </>
   )
 }

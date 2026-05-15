@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { ABOUT, STATS } from '../data'
+import useIsMobile from '../hooks/useIsMobile'
 
-function Counter({ value, suffix, label }) {
+function Counter({ value, suffix, label, isLast }) {
   const [count, setCount] = useState(0)
   const ref = useRef(null)
   const started = useRef(false)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
@@ -30,8 +32,9 @@ function Counter({ value, suffix, label }) {
   return (
     <div ref={ref} style={{
       flex: 1,
-      padding: '32px 24px',
+      padding: isMobile ? '24px 16px' : '32px 24px',
       borderLeft: '1px solid var(--ink-muted)',
+      borderBottom: isMobile && !isLast ? '1px solid var(--ink-muted)' : 'none',
       position: 'relative',
     }}>
       <div style={{
@@ -68,6 +71,7 @@ function Counter({ value, suffix, label }) {
 }
 
 export default function About() {
+  const isMobile = useIsMobile()
   return (
     <section id="about" className="section" style={{ paddingBottom: 0 }}>
       {/* Label */}
@@ -76,8 +80,8 @@ export default function About() {
       {/* Two-column layout */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gap: '60px',
+        gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+        gap: isMobile ? '32px' : '60px',
         alignItems: 'start',
       }}>
         {/* Left — headline */}
@@ -116,12 +120,13 @@ export default function About() {
 
       {/* Stats row */}
       <div style={{
-        display: 'flex',
-        marginTop: '80px',
+        display: isMobile ? 'grid' : 'flex',
+        gridTemplateColumns: isMobile ? '1fr 1fr' : undefined,
+        marginTop: isMobile ? '48px' : '80px',
         borderTop: '1px solid var(--ink-muted)',
       }}>
-        {STATS.map(s => (
-          <Counter key={s.label} {...s} />
+        {STATS.map((s, i) => (
+          <Counter key={s.label} {...s} isLast={i === STATS.length - 1} />
         ))}
       </div>
     </section>

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Nav from '../components/Nav'
 import { FEATURED, PROJECTS_ARCHIVE } from '../data'
+import useIsMobile from '../hooks/useIsMobile'
 
 const COMPANY_COLORS = {
   FULCRUM: '#00c4a7',
@@ -15,7 +16,7 @@ const YEARS = [2020, 2021, 2022, 2023, 2024, 2025, 2026]
 // ──────────────────────────────────────────────────────────────
 // FEATURED CARD
 // ──────────────────────────────────────────────────────────────
-function FeaturedCard({ project, isFirst }) {
+function FeaturedCard({ project, isFirst, isMobile }) {
   const cardRef = useRef(null)
   const rafRef = useRef(null)
 
@@ -51,10 +52,10 @@ function FeaturedCard({ project, isFirst }) {
         background: 'rgba(255,255,255,0.02)',
         border: '1px solid rgba(245,241,232,0.08)',
         borderRadius: '12px',
-        padding: isFirst ? '48px' : '32px',
+        padding: isFirst ? (isMobile ? '28px' : '48px') : '32px',
         cursor: 'none',
         overflow: 'hidden',
-        gridColumn: isFirst ? 'span 2' : 'span 1',
+        gridColumn: isMobile ? 'span 1' : (isFirst ? 'span 2' : 'span 1'),
         display: 'flex',
         flexDirection: 'column',
         gap: '16px',
@@ -404,7 +405,7 @@ function Constellation() {
 // ──────────────────────────────────────────────────────────────
 // ARCHIVE LIST
 // ──────────────────────────────────────────────────────────────
-function ArchiveList() {
+function ArchiveList({ isMobile }) {
   const [hovered, setHovered] = useState(null)
   return (
     <div style={{ marginTop: '48px' }}>
@@ -458,8 +459,8 @@ function ArchiveList() {
           onMouseLeave={() => setHovered(null)}
           style={{
             display: 'grid',
-            gridTemplateColumns: '60px 1fr auto auto 24px',
-            gap: '24px',
+            gridTemplateColumns: isMobile ? '48px 1fr 20px' : '60px 1fr auto auto 24px',
+            gap: isMobile ? '12px' : '24px',
             padding: '16px 0',
             borderBottom: '1px solid rgba(245,241,232,0.06)',
             alignItems: 'center',
@@ -491,12 +492,16 @@ function ArchiveList() {
               </span>
             )}
           </div>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'rgba(245,241,232,0.35)', letterSpacing: '0.06em', whiteSpace: 'nowrap' }}>
-            {p.company}
-          </span>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'rgba(245,241,232,0.3)', letterSpacing: '0.06em', whiteSpace: 'nowrap' }}>
-            {p.stack}
-          </span>
+          {!isMobile && (
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'rgba(245,241,232,0.35)', letterSpacing: '0.06em', whiteSpace: 'nowrap' }}>
+              {p.company}
+            </span>
+          )}
+          {!isMobile && (
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'rgba(245,241,232,0.3)', letterSpacing: '0.06em', whiteSpace: 'nowrap' }}>
+              {p.stack}
+            </span>
+          )}
           <span className="ar-arrow">↗</span>
         </div>
       ))}
@@ -508,6 +513,7 @@ function ArchiveList() {
 // PAGE
 // ──────────────────────────────────────────────────────────────
 export default function Projects() {
+  const isMobile = useIsMobile()
   useEffect(() => { window.scrollTo(0, 0) }, [])
 
   return (
@@ -515,7 +521,7 @@ export default function Projects() {
       <Nav />
 
       {/* Hero */}
-      <section style={{ paddingTop: '140px', paddingBottom: '80px', paddingLeft: '60px', paddingRight: '60px', borderBottom: '1px solid rgba(245,241,232,0.06)' }}>
+      <section style={{ paddingTop: '140px', paddingBottom: '80px', paddingLeft: isMobile ? '20px' : '60px', paddingRight: isMobile ? '20px' : '60px', borderBottom: '1px solid rgba(245,241,232,0.06)' }}>
         <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--cream-muted)', marginBottom: '24px' }}>
           PORTFOLIO · ALL WORK
         </div>
@@ -524,7 +530,7 @@ export default function Projects() {
           <span style={{ color: 'var(--accent)' }}>8+ years.</span>
         </h1>
         {/* Stat cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', marginBottom: '40px', maxWidth: '720px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: '16px', marginBottom: '40px', maxWidth: '720px' }}>
           {[
             { value: '24', label: 'Projects shipped' },
             { value: '8+', label: 'Years experience' },
@@ -553,21 +559,21 @@ export default function Projects() {
       </section>
 
       {/* Featured grid */}
-      <section id="featured" style={{ padding: '80px 60px' }}>
+      <section id="featured" style={{ padding: isMobile ? '60px 20px' : '80px 60px' }}>
         <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--cream-muted)', marginBottom: '48px', display: 'flex', alignItems: 'center', gap: '10px' }}>
           <span style={{ width: '2rem', height: '1px', background: 'var(--accent)', display: 'inline-block' }} />
           FEATURED DEEP-DIVES
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '16px' }}>
           {FEATURED.map((p, i) => (
-            <FeaturedCard key={p.id} project={p} isFirst={i === 0} />
+            <FeaturedCard key={p.id} project={p} isFirst={i === 0} isMobile={isMobile} />
           ))}
         </div>
       </section>
 
       {/* Constellation archive */}
-      <section id="archive" style={{ padding: '80px 60px', borderTop: '1px solid rgba(245,241,232,0.06)' }}>
+      <section id="archive" style={{ padding: isMobile ? '60px 20px' : '80px 60px', borderTop: '1px solid rgba(245,241,232,0.06)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '48px', flexWrap: 'wrap', gap: '16px' }}>
           <div>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--cream-muted)', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -595,7 +601,7 @@ export default function Projects() {
         </div>
 
         <Constellation />
-        <ArchiveList />
+        <ArchiveList isMobile={isMobile} />
       </section>
     </div>
   )
