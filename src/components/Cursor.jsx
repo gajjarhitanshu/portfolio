@@ -101,7 +101,7 @@ export default function Cursor() {
         @media (pointer: coarse) { .cursor { display: none; } }
       `}</style>
       <div ref={cursorRef} className="cursor">
-        <span className="cursor-label">VIEW</span>
+        <span className="cursor-label"></span>
       </div>
     </>
   )
