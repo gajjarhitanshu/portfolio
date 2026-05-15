@@ -1,38 +1,33 @@
 import type { Metadata } from "next";
-import { Syne, Space_Mono, Inter } from "next/font/google";
+import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import CustomCursor from "@/components/CustomCursor";
+import SiteCursor from "@/components/SiteCursor";
 
-const syne = Syne({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-syne",
-  weight: ["400", "600", "700", "800"],
+  variable: "--font-grotesk",
+  weight: ["400", "500", "600", "700"],
 });
 
-const spaceMono = Space_Mono({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  variable: "--font-mono",
-  weight: ["400", "700"],
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-jetbrains",
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
-  title: "Hitanshu Gajjar — Senior Software Engineer",
+  title: "Hitanshu Gajjar — Senior Software Engineer · Portfolio",
   description:
-    "Senior Software Engineer specialising in React Native, Frontend Architecture, and AI-integrated applications.",
+    "Hitanshu Gajjar — Senior Software Engineer specialising in React Native, frontend architecture, and AI integration. 7+ years, 50+ shipped apps.",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${syne.variable} ${spaceMono.variable} ${inter.variable}`}>
+    <html lang="en" className={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
       <body>
-        <CustomCursor />
+        <SiteCursor />
         {children}
       </body>
     </html>
