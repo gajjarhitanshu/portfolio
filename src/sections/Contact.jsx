@@ -166,7 +166,7 @@ export default function Contact() {
             Now
           </div>
           <div style={{ fontFamily: 'var(--font-sans)', fontSize: '0.9rem', color: 'var(--cream)', lineHeight: 1.5 }}>
-            Frontend Architect — Fulcrum Digital
+            Sr. Software Engineer — Fulcrum Digital
             <br />
             <span style={{ color: 'var(--cream-muted)', fontSize: '0.82rem' }}>React.js · TypeScript · Enterprise</span>
           </div>
