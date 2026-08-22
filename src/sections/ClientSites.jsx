@@ -9,7 +9,7 @@ const SITES = [
       'Boutique website for a luxury wall-finish studio — lime wash, stucco, decorative paint and DUCO hand-finished by 35 artisans across 450+ homes, hotels and studios in Gujarat.',
     url: 'https://harsha-deesigns.netlify.app',
     screenshot: '/screenshots/harsha-deesigns.png',
-    tags: ['HTML · CSS · JS', 'Netlify', 'Client Project'],
+    tags: ['HTML · CSS · JS', 'Netlify', 'Live Project'],
     year: '2025',
   },
   {
@@ -19,7 +19,7 @@ const SITES = [
       'Editorial fragrance brand site for Regent — four niche perfumes cast in the form of a chess king, with a cinematic scroll-driven presentation and product showcase.',
     url: 'https://regent-perfume.netlify.app',
     screenshot: '/screenshots/regent-perfume.png',
-    tags: ['HTML · CSS · JS', 'Netlify', 'Client Project'],
+    tags: ['HTML · CSS · JS', 'Netlify', 'Live Project'],
     year: '2025',
   },
 ]
@@ -252,7 +252,7 @@ export default function ClientSites() {
           maxWidth: '340px',
           textAlign: isMobile ? 'left' : 'right',
         }}>
-          A selection from my client portfolio — designed, coded and deployed from scratch.
+          Websites designed, coded and deployed from scratch — live on the web.
         </p>
       </div>
 
