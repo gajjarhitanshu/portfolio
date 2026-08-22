@@ -25,7 +25,7 @@ export default function Contact() {
         gap: '10px',
       }}>
         <span style={{ width: '2rem', height: '1px', background: 'var(--accent)', display: 'inline-block' }} />
-        06 · CONTACT
+        07 · CONTACT
       </div>
 
       {/* Headline */}

@@ -7,6 +7,7 @@ import Skills from '../sections/Skills'
 import Work from '../sections/Work'
 import Experience from '../sections/Experience'
 import ContractWork from '../sections/ContractWork'
+import ClientSites from '../sections/ClientSites'
 import Contact from '../sections/Contact'
 
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
       <Work />
       <Experience />
       <ContractWork />
+      <ClientSites />
       <Contact />
     </div>
   )
