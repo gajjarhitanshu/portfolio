@@ -57,7 +57,7 @@ export default function ContractWork() {
           gap: '10px',
         }}>
           <span style={{ width: '2rem', height: '1px', background: 'var(--ink)', display: 'inline-block', opacity: 0.3 }} />
-          05 · INDEPENDENT WORK
+          06 · INDEPENDENT WORK
         </div>
 
         {/* Headline */}

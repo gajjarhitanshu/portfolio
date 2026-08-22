@@ -165,7 +165,7 @@ function ExperienceRow({ job, index }) {
 export default function Experience() {
   return (
     <section id="experience" className="section">
-      <div className="section-label">04 · EXPERIENCE</div>
+      <div className="section-label">05 · EXPERIENCE</div>
 
       <h2 style={{
         fontFamily: 'var(--font-sans)',

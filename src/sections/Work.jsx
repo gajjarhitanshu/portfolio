@@ -292,7 +292,7 @@ export default function Work() {
 
   return (
     <section id="work" className="section">
-      <div className="section-label">03 · FEATURED WORK</div>
+      <div className="section-label">04 · FEATURED WORK</div>
 
       <div style={{
         display: 'flex',
