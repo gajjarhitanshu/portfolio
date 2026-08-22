@@ -69,7 +69,6 @@ function BrowserCard({ site, isMobile }) {
           border-color: rgba(255,107,61,0.35) !important;
           box-shadow: 0 0 40px rgba(255,107,61,0.08);
         }
-        .client-card:hover .cc-visit { opacity: 1; transform: translateX(0); }
         .client-card:hover .cc-overlay { opacity: 1; }
       `}</style>
 
@@ -177,14 +176,20 @@ function BrowserCard({ site, isMobile }) {
           </div>
           <span className="cc-visit" style={{
             fontFamily: 'var(--font-mono)',
-            fontSize: '0.62rem',
+            fontSize: '0.65rem',
             letterSpacing: '0.12em',
             textTransform: 'uppercase',
+            padding: '10px 22px',
+            borderRadius: '999px',
+            border: '1px solid var(--accent)',
             color: 'var(--accent)',
-            opacity: 0,
-            transform: 'translateX(-8px)',
-            transition: 'opacity 0.25s, transform 0.25s',
-          }}>
+            background: 'transparent',
+            transition: 'background 0.2s, color 0.2s',
+            flexShrink: 0,
+          }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'var(--accent)'; e.currentTarget.style.color = 'var(--ink)' }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--accent)' }}
+          >
             VISIT SITE ↗
           </span>
         </div>
@@ -218,7 +223,7 @@ export default function ClientSites() {
         gap: '10px',
       }}>
         <span style={{ width: '2rem', height: '1px', background: 'var(--accent)', display: 'inline-block' }} />
-        06 · LIVE BUILDS
+        03 · LIVE BUILDS
       </div>
 
       <div style={{

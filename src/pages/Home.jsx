@@ -18,12 +18,12 @@ export default function Home() {
       <Nav />
       <Hero />
       <Marquee />
+      <ClientSites />
       <About />
       <Skills />
       <Work />
       <Experience />
       <ContractWork />
-      <ClientSites />
       <Contact />
     </div>
   )
