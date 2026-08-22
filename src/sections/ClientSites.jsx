@@ -242,7 +242,7 @@ export default function ClientSites() {
           lineHeight: 1,
           color: 'var(--cream)',
         }}>
-          Client sites, live.
+          Shipped to<br />production.
         </h2>
         <p style={{
           fontFamily: 'var(--font-sans)',
@@ -252,7 +252,7 @@ export default function ClientSites() {
           maxWidth: '340px',
           textAlign: isMobile ? 'left' : 'right',
         }}>
-          Real-world HTML/CSS/JS builds — designed and deployed for clients, live on the web.
+          Websites designed, coded and deployed for real clients — live on the web.
         </p>
       </div>
 
