@@ -223,7 +223,7 @@ export default function ClientSites() {
         gap: '10px',
       }}>
         <span style={{ width: '2rem', height: '1px', background: 'var(--accent)', display: 'inline-block' }} />
-        03 · LIVE BUILDS
+        03 · WEB PORTFOLIO
       </div>
 
       <div style={{
@@ -252,7 +252,7 @@ export default function ClientSites() {
           maxWidth: '340px',
           textAlign: isMobile ? 'left' : 'right',
         }}>
-          Websites designed, coded and deployed for real clients — live on the web.
+          A selection from my client portfolio — designed, coded and deployed from scratch.
         </p>
       </div>
 
