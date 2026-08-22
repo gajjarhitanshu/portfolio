@@ -18,9 +18,9 @@ export default function Home() {
       <Nav />
       <Hero />
       <Marquee />
-      <ClientSites />
       <About />
       <Skills />
+      <ClientSites />
       <Work />
       <Experience />
       <ContractWork />
