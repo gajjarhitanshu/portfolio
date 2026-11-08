@@ -48,7 +48,7 @@ export default function Skills() {
         }}
       >
         <h2 style={{
-          fontFamily: 'var(--font-display)',
+          fontFamily: 'var(--font-sans)',
           fontWeight: 900,
           fontStyle: 'italic',
           fontSize: 'clamp(2.8rem, 6vw, 5.5rem)',

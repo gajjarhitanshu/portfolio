@@ -110,7 +110,7 @@ export default function Hero() {
       }}>
         <div className={`h-name${mounted ? ' in' : ''}`} style={{ animationDelay: '0.3s', textAlign: 'center' }}>
           <div style={{
-            fontFamily: 'var(--font-display)',
+            fontFamily: 'var(--font-sans)',
             fontWeight: 900,
             fontStyle: 'italic',
             fontSize: 'clamp(4rem, 13vw, 14rem)',
@@ -121,7 +121,7 @@ export default function Hero() {
             HITANSHU
           </div>
           <div style={{
-            fontFamily: 'var(--font-display)',
+            fontFamily: 'var(--font-sans)',
             fontWeight: 900,
             fontStyle: 'italic',
             fontSize: 'clamp(4rem, 13vw, 14rem)',

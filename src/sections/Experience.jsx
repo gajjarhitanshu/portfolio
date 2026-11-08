@@ -84,7 +84,7 @@ function ExperienceRow({ job, index }) {
         {/* Role + company */}
         <div style={{ display: 'flex', alignItems: 'baseline', gap: '16px', flexWrap: 'wrap', marginBottom: '6px' }}>
           <h3 style={{
-            fontFamily: 'var(--font-display)',
+            fontFamily: 'var(--font-sans)',
             fontWeight: 700,
             fontStyle: 'italic',
             fontSize: 'clamp(1.4rem, 2.8vw, 2.2rem)',
@@ -176,7 +176,7 @@ export default function Experience() {
 
       <div ref={headRef} className="reveal" style={{ marginBottom: '56px' }}>
         <h2 style={{
-          fontFamily: 'var(--font-display)',
+          fontFamily: 'var(--font-sans)',
           fontWeight: 900,
           fontStyle: 'italic',
           fontSize: 'clamp(2.5rem, 6vw, 5rem)',

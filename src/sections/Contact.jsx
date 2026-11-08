@@ -36,7 +36,7 @@ export default function Contact() {
       {/* Display headline */}
       <div ref={headRef} className="reveal" style={{ marginBottom: '48px' }}>
         <h2 style={{
-          fontFamily: 'var(--font-display)',
+          fontFamily: 'var(--font-sans)',
           fontWeight: 900,
           fontStyle: 'italic',
           fontSize: isMobile ? 'clamp(3.5rem, 14vw, 7rem)' : 'clamp(4rem, 10vw, 10rem)',

@@ -36,7 +36,7 @@ function Counter({ value, suffix, label }) {
       gap: '6px',
     }}>
       <div style={{
-        fontFamily: 'var(--font-display)',
+        fontFamily: 'var(--font-sans)',
         fontWeight: 900,
         fontSize: 'clamp(3rem, 6vw, 5rem)',
         letterSpacing: '-0.03em',
@@ -79,7 +79,7 @@ export default function About() {
         {/* Left — display pull-quote */}
         <div ref={headlineRef} className="reveal">
           <h2 style={{
-            fontFamily: 'var(--font-display)',
+            fontFamily: 'var(--font-sans)',
             fontWeight: 900,
             fontStyle: 'italic',
             fontSize: isMobile ? 'clamp(3rem, 10vw, 5rem)' : 'clamp(3.5rem, 7vw, 6.5rem)',
