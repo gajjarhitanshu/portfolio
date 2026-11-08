@@ -1,13 +1,17 @@
 import { useState } from 'react'
 import { EXPERIENCE } from '../data'
 import useIsMobile from '../hooks/useIsMobile'
+import useScrollReveal from '../hooks/useScrollReveal'
 
 function ExperienceRow({ job, index }) {
   const [hovered, setHovered] = useState(false)
   const isMobile = useIsMobile()
+  const ref = useScrollReveal({ threshold: 0.1 })
 
   return (
     <div
+      ref={ref}
+      className="reveal"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{ position: 'relative', cursor: 'none' }}
@@ -80,10 +84,11 @@ function ExperienceRow({ job, index }) {
         {/* Role + company */}
         <div style={{ display: 'flex', alignItems: 'baseline', gap: '16px', flexWrap: 'wrap', marginBottom: '6px' }}>
           <h3 style={{
-            fontFamily: 'var(--font-sans)',
+            fontFamily: 'var(--font-display)',
             fontWeight: 700,
-            fontSize: 'clamp(1.4rem, 2.8vw, 2rem)',
-            letterSpacing: '-0.025em',
+            fontStyle: 'italic',
+            fontSize: 'clamp(1.4rem, 2.8vw, 2.2rem)',
+            letterSpacing: '-0.02em',
             color: hovered ? 'var(--cream)' : 'rgba(245,241,232,0.8)',
             transition: 'color 0.3s',
             lineHeight: 1.1,
@@ -163,21 +168,25 @@ function ExperienceRow({ job, index }) {
 }
 
 export default function Experience() {
+  const headRef = useScrollReveal()
+
   return (
     <section id="experience" className="section">
       <div className="section-label">05 · EXPERIENCE</div>
 
-      <h2 style={{
-        fontFamily: 'var(--font-sans)',
-        fontWeight: 700,
-        fontSize: 'clamp(2.5rem, 6vw, 5rem)',
-        letterSpacing: '-0.03em',
-        lineHeight: 1,
-        color: 'var(--cream)',
-        marginBottom: '56px',
-      }}>
-        Where I've shipped.
-      </h2>
+      <div ref={headRef} className="reveal" style={{ marginBottom: '56px' }}>
+        <h2 style={{
+          fontFamily: 'var(--font-display)',
+          fontWeight: 900,
+          fontStyle: 'italic',
+          fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+          letterSpacing: '-0.03em',
+          lineHeight: 1,
+          color: 'var(--cream)',
+        }}>
+          Where I've shipped.
+        </h2>
+      </div>
 
       <div style={{ borderTop: '1px solid rgba(245,241,232,0.07)' }}>
         {EXPERIENCE.map((job, i) => (
