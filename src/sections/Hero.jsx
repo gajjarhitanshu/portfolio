@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Hero3D from '../components/Hero3D'
 import { META, ROLES } from '../data'
@@ -30,8 +30,9 @@ export default function Hero() {
     <section style={{
       position: 'relative',
       minHeight: '100vh',
-      display: 'grid',
-      gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
       overflow: 'hidden',
       background: 'var(--ink)',
     }}>
@@ -41,17 +42,17 @@ export default function Hero() {
           to   { opacity: 1; transform: translateY(0); }
         }
         .h-fade { opacity: 0; }
-        .h-fade.in { animation: heroFadeUp 1s var(--reveal-easing) both; }
+        .h-fade.in { animation: heroFadeUp 0.9s var(--reveal-easing) both; }
 
-        @keyframes displaySlide {
-          from { opacity: 0; transform: translateY(48px) skewY(2deg); }
-          to   { opacity: 1; transform: translateY(0) skewY(0); }
+        @keyframes displayDrop {
+          from { opacity: 0; transform: translateY(40px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
-        .h-display { opacity: 0; }
-        .h-display.in { animation: displaySlide 1.1s var(--reveal-easing) both; }
+        .h-name { opacity: 0; }
+        .h-name.in { animation: displayDrop 1s var(--reveal-easing) both; }
 
         .role-swap { transition: opacity 0.3s ease, transform 0.3s ease; }
-        .role-swap.out { opacity: 0; transform: translateY(-8px); }
+        .role-swap.out { opacity: 0; transform: translateY(-6px); }
 
         @keyframes scrollBounce {
           0%,100% { transform: translateY(0); }
@@ -60,196 +61,157 @@ export default function Hero() {
         .scroll-bounce { animation: scrollBounce 1.6s ease-in-out infinite; }
 
         @media (prefers-reduced-motion: reduce) {
-          .h-fade, .h-display { opacity: 1; animation: none; }
+          .h-fade, .h-name { opacity: 1; animation: none; }
           .scroll-bounce { animation: none; }
         }
       `}</style>
 
-      {/* Left — text content */}
+      {/* Full-bleed 3D canvas */}
+      <Hero3D />
+
+      {/* Top metadata row */}
       <div style={{
+        position: 'absolute',
+        top: isMobile ? '24px' : '36px',
+        left: isMobile ? '20px' : '36px',
+        right: isMobile ? '20px' : '36px',
         display: 'flex',
-        flexDirection: 'column',
         justifyContent: 'space-between',
-        padding: isMobile ? '100px 24px 32px' : '100px 48px 48px',
-        position: 'relative',
-        zIndex: 2,
+        alignItems: 'center',
       }}>
-        {/* Top meta */}
         <div className={`h-fade${mounted ? ' in' : ''}`} style={{ animationDelay: '0.1s' }}>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '20px',
-          }}>
-            <div style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.6rem',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              color: 'rgba(245,241,232,0.35)',
-            }}>
-              {META.portfolio}
-            </div>
-            <div style={{ width: '1px', height: '12px', background: 'rgba(245,241,232,0.15)' }} />
-            <div style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.6rem',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              color: 'rgba(245,241,232,0.35)',
-            }}>
-              {META.edition}
-            </div>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(245,241,232,0.35)' }}>
+            {META.portfolio}
+          </div>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(245,241,232,0.35)', marginTop: '2px' }}>
+            {META.edition}
           </div>
         </div>
-
-        {/* Centre — giant display name */}
-        <div>
-          <div className={`h-display${mounted ? ' in' : ''}`} style={{ animationDelay: '0.3s' }}>
-            <h1 style={{
-              fontFamily: 'var(--font-display)',
-              fontWeight: 900,
-              fontStyle: 'italic',
-              fontSize: isMobile ? 'clamp(4.5rem, 18vw, 8rem)' : 'clamp(5rem, 9vw, 10rem)',
-              lineHeight: 0.9,
-              letterSpacing: '-0.03em',
-              color: 'var(--cream)',
-              marginBottom: '0.1em',
-            }}>
-              Hitan-
-              <br />shu
-            </h1>
-            <h1 style={{
-              fontFamily: 'var(--font-display)',
-              fontWeight: 900,
-              fontStyle: 'italic',
-              fontSize: isMobile ? 'clamp(4.5rem, 18vw, 8rem)' : 'clamp(5rem, 9vw, 10rem)',
-              lineHeight: 0.9,
-              letterSpacing: '-0.03em',
-              color: 'var(--accent)',
-              WebkitTextStroke: '0px',
-            }}>
-              Gajjar.
-            </h1>
+        <div className={`h-fade${mounted ? ' in' : ''}`} style={{ animationDelay: '0.2s', textAlign: 'right' }}>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(245,241,232,0.35)' }}>
+            {META.location}
           </div>
-
-          <div className={`h-fade${mounted ? ' in' : ''}`} style={{ animationDelay: '0.65s', marginTop: '32px' }}>
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.6rem',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              color: 'var(--cream-muted)',
-              marginBottom: '10px',
-            }}>
-              <span style={{
-                width: '7px', height: '7px', borderRadius: '50%',
-                background: 'var(--green)',
-                boxShadow: '0 0 8px var(--green)',
-                display: 'inline-block',
-              }} />
-              {META.availability}
-            </div>
-            <p style={{
-              fontFamily: 'var(--font-sans)',
-              fontSize: '0.95rem',
-              lineHeight: 1.6,
-              color: 'var(--cream-muted)',
-              maxWidth: '340px',
-            }}>
-              {META.tagline}
-            </p>
-          </div>
-        </div>
-
-        {/* Bottom bar */}
-        <div className={`h-fade${mounted ? ' in' : ''}`} style={{
-          animationDelay: '0.85s',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '16px',
-          flexWrap: 'wrap',
-          paddingTop: '32px',
-          borderTop: '1px solid rgba(245,241,232,0.08)',
-        }}>
-          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-            <Link to="/projects" className="pill pill-outline" style={{ fontSize: '0.65rem' }}>
-              SEE WORK ↗
-            </Link>
-            <a href="#contact" className="pill pill-accent" style={{ fontSize: '0.65rem' }}>
-              CONTACT
-            </a>
-          </div>
-
-          {/* Animated role */}
-          <div style={{ textAlign: 'right' }}>
-            <div style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.55rem',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              color: 'rgba(245,241,232,0.3)',
-              marginBottom: '4px',
-            }}>
-              // CURRENTLY
-            </div>
-            <div
-              className={`role-swap${roleVisible ? '' : ' out'}`}
-              style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '0.65rem',
-                letterSpacing: '0.08em',
-                color: 'var(--cream)',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              {ROLES[roleIndex]}
-            </div>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(245,241,232,0.35)', marginTop: '2px' }}>
+            {META.title}
           </div>
         </div>
       </div>
 
-      {/* Right — 3D canvas */}
+      {/* Giant centred name */}
       <div style={{
-        position: isMobile ? 'absolute' : 'relative',
-        inset: isMobile ? 0 : undefined,
-        opacity: isMobile ? 0.18 : 1,
-        pointerEvents: isMobile ? 'none' : undefined,
+        position: 'absolute',
+        inset: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        pointerEvents: 'none',
+        userSelect: 'none',
       }}>
-        <Hero3D />
+        <div className={`h-name${mounted ? ' in' : ''}`} style={{ animationDelay: '0.3s', textAlign: 'center' }}>
+          <div style={{
+            fontFamily: 'var(--font-display)',
+            fontWeight: 900,
+            fontStyle: 'italic',
+            fontSize: 'clamp(4rem, 13vw, 14rem)',
+            lineHeight: 0.88,
+            letterSpacing: '-0.03em',
+            color: 'var(--cream)',
+          }}>
+            HITANSHU
+          </div>
+          <div style={{
+            fontFamily: 'var(--font-display)',
+            fontWeight: 900,
+            fontStyle: 'italic',
+            fontSize: 'clamp(4rem, 13vw, 14rem)',
+            lineHeight: 0.88,
+            letterSpacing: '-0.03em',
+            color: 'var(--accent)',
+          }}>
+            GAJJAR.
+          </div>
+        </div>
+      </div>
+
+      {/* Divider line */}
+      {!isMobile && (
+        <div style={{
+          position: 'absolute',
+          bottom: '140px',
+          left: '36px',
+          right: '36px',
+          height: '1px',
+          background: 'rgba(245,241,232,0.08)',
+        }} />
+      )}
+
+      {/* Bottom bar */}
+      <div style={{
+        position: 'absolute',
+        bottom: isMobile ? '24px' : '36px',
+        left: isMobile ? '20px' : '36px',
+        right: isMobile ? '20px' : '36px',
+        display: 'flex',
+        flexDirection: isMobile ? 'column' : 'row',
+        alignItems: isMobile ? 'flex-start' : 'flex-end',
+        justifyContent: 'space-between',
+        gap: isMobile ? '16px' : '24px',
+      }}>
+        {/* Left — availability + tagline */}
+        <div className={`h-fade${mounted ? ' in' : ''}`} style={{ animationDelay: '0.65s', maxWidth: '340px' }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.6rem',
+            letterSpacing: '0.15em',
+            textTransform: 'uppercase',
+            color: 'var(--cream-muted)',
+            marginBottom: '10px',
+          }}>
+            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--green)', boxShadow: '0 0 8px var(--green)', display: 'inline-block' }} />
+            {META.availability}
+          </div>
+          <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.9rem', lineHeight: 1.55, color: 'var(--cream-muted)' }}>
+            {META.tagline}
+          </p>
+        </div>
+
+        {/* Centre — scroll / role */}
+        <div className={`h-fade${mounted ? ' in' : ''}`} style={{ animationDelay: '0.75s', textAlign: isMobile ? 'left' : 'center', flexShrink: 0 }}>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(245,241,232,0.3)', marginBottom: '4px' }}>
+            // CURRENTLY
+          </div>
+          <div style={{ width: '1px', height: '28px', background: 'rgba(245,241,232,0.18)', margin: '0 auto 4px' }} />
+          <div className={`role-swap${roleVisible ? '' : ' out'}`} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', letterSpacing: '0.08em', color: 'var(--cream)' }}>
+            {ROLES[roleIndex]}
+          </div>
+        </div>
+
+        {/* Right — CTAs */}
+        <div className={`h-fade${mounted ? ' in' : ''}`} style={{ animationDelay: '0.85s', display: 'flex', gap: '10px', alignItems: 'center', flexShrink: 0, flexWrap: 'wrap' }}>
+          <Link to="/projects" className="pill pill-outline" style={{ fontSize: '0.65rem' }}>
+            SEE THE WORK ↗
+          </Link>
+          <a href="#contact" className="pill pill-accent" style={{ fontSize: '0.65rem' }}>
+            CONTACT
+          </a>
+        </div>
       </div>
 
       {/* Scroll cue */}
       {!isMobile && (
-        <div style={{
+        <div className="scroll-bounce" style={{
           position: 'absolute',
-          bottom: '32px',
+          bottom: '48px',
           left: '50%',
           transform: 'translateX(-50%)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '6px',
-        }}>
-          <div style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '0.5rem',
-            letterSpacing: '0.2em',
-            textTransform: 'uppercase',
-            color: 'rgba(245,241,232,0.25)',
-          }}>
-            SCROLL
-          </div>
-          <div className="scroll-bounce" style={{
-            width: '1px',
-            height: '40px',
-            background: 'linear-gradient(to bottom, rgba(245,241,232,0.3), transparent)',
-          }} />
-        </div>
+          width: '1px',
+          height: '48px',
+          background: 'linear-gradient(to bottom, rgba(245,241,232,0.25), transparent)',
+        }} />
       )}
     </section>
   )
