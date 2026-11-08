@@ -1,14 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Hero3D from '../components/Hero3D'
 import { META, ROLES } from '../data'
 import useIsMobile from '../hooks/useIsMobile'
 
+const FIRST = 'HITANSHU'
+const LAST = 'GAJJAR.'
+
 export default function Hero() {
   const [roleIndex, setRoleIndex] = useState(0)
   const [roleVisible, setRoleVisible] = useState(true)
   const [mounted, setMounted] = useState(false)
+  const [scrollY, setScrollY] = useState(0)
   const isMobile = useIsMobile()
+  const rafRef = useRef(null)
 
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 100)
@@ -26,6 +31,26 @@ export default function Hero() {
     return () => clearInterval(interval)
   }, [])
 
+  /* Parallax scroll tracker — RAF-throttled */
+  useEffect(() => {
+    const onScroll = () => {
+      if (rafRef.current) return
+      rafRef.current = requestAnimationFrame(() => {
+        setScrollY(window.scrollY)
+        rafRef.current = null
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+    }
+  }, [])
+
+  /* Parallax offsets */
+  const metaParallax = isMobile ? 0 : scrollY * 0.12
+  const nameParallax  = isMobile ? 0 : scrollY * 0.06
+
   return (
     <section style={{
       position: 'relative',
@@ -37,31 +62,107 @@ export default function Hero() {
       background: 'var(--ink)',
     }}>
       <style>{`
+        /* ── Metadata fade-up ── */
         @keyframes heroFadeUp {
-          from { opacity: 0; transform: translateY(32px); }
+          from { opacity: 0; transform: translateY(28px); }
           to   { opacity: 1; transform: translateY(0); }
         }
         .h-fade { opacity: 0; }
-        .h-fade.in { animation: heroFadeUp 0.9s var(--reveal-easing) both; }
+        .h-fade.in { animation: heroFadeUp 0.85s cubic-bezier(0.16,1,0.3,1) both; }
 
-        @keyframes displayDrop {
-          from { opacity: 0; transform: translateY(40px); }
-          to   { opacity: 1; transform: translateY(0); }
+        /* ── Letter drop ── */
+        @keyframes letterDrop {
+          from { opacity: 0; transform: translateY(60%) skewY(4deg); }
+          to   { opacity: 1; transform: translateY(0) skewY(0deg); }
         }
-        .h-name { opacity: 0; }
-        .h-name.in { animation: displayDrop 1s var(--reveal-easing) both; }
+        .h-letter { display: inline-block; opacity: 0; }
+        .h-letter.in { animation: letterDrop 0.7s cubic-bezier(0.16,1,0.3,1) both; }
 
+        /* ── Gradient shimmer sweep on GAJJAR. ── */
+        @keyframes shimmerSweep {
+          0%   { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        .h-gradient-text {
+          background: linear-gradient(
+            105deg,
+            var(--accent) 0%,
+            #ff9a5c 30%,
+            #fff4e0 50%,
+            #ff9a5c 70%,
+            var(--accent) 100%
+          );
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          color: transparent;
+        }
+        .h-gradient-text.shimmer {
+          animation: shimmerSweep 3.2s linear 1.2s infinite;
+        }
+
+        /* ── Availability pulse ring ── */
+        @keyframes pulseRing {
+          0%   { transform: scale(1);   opacity: 0.7; }
+          70%  { transform: scale(2.2); opacity: 0;   }
+          100% { transform: scale(2.2); opacity: 0;   }
+        }
+        .avail-dot-wrap { position: relative; display: inline-flex; align-items: center; justify-content: center; }
+        .avail-dot-ring {
+          position: absolute;
+          inset: -2px;
+          border-radius: 50%;
+          background: var(--green);
+          animation: pulseRing 2s cubic-bezier(0.215,0.61,0.355,1) infinite;
+        }
+        .avail-dot {
+          position: relative;
+          width: 7px; height: 7px;
+          border-radius: 50%;
+          background: var(--green);
+          box-shadow: 0 0 8px var(--green);
+          z-index: 1;
+        }
+
+        /* ── CTA spring slide-up ── */
+        @keyframes springUp {
+          from { opacity: 0; transform: translateY(24px) scale(0.94); }
+          to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .h-spring { opacity: 0; }
+        .h-spring.in { animation: springUp 0.75s cubic-bezier(0.34,1.56,0.64,1) both; }
+
+        /* ── Animated divider line ── */
+        @keyframes lineGrow {
+          from { transform: scaleX(0); }
+          to   { transform: scaleX(1); }
+        }
+        .h-divider {
+          transform-origin: left center;
+          transform: scaleX(0);
+        }
+        .h-divider.in {
+          animation: lineGrow 1s cubic-bezier(0.16,1,0.3,1) 0.9s both;
+        }
+
+        /* ── Role swap ── */
         .role-swap { transition: opacity 0.3s ease, transform 0.3s ease; }
         .role-swap.out { opacity: 0; transform: translateY(-6px); }
 
+        /* ── Scroll bounce ── */
         @keyframes scrollBounce {
-          0%,100% { transform: translateY(0); }
-          50% { transform: translateY(6px); }
+          0%,100% { transform: translateX(-50%) translateY(0); }
+          50%     { transform: translateX(-50%) translateY(6px); }
         }
         .scroll-bounce { animation: scrollBounce 1.6s ease-in-out infinite; }
 
+        /* ── Reduced motion ── */
         @media (prefers-reduced-motion: reduce) {
-          .h-fade, .h-name { opacity: 1; animation: none; }
+          .h-fade, .h-letter, .h-spring { opacity: 1; animation: none; }
+          .h-gradient-text.shimmer { animation: none; }
+          .h-divider { transform: scaleX(1); animation: none; }
+          .avail-dot-ring { animation: none; opacity: 0; }
           .scroll-bounce { animation: none; }
         }
       `}</style>
@@ -69,7 +170,7 @@ export default function Hero() {
       {/* Full-bleed 3D canvas */}
       <Hero3D />
 
-      {/* Top metadata row */}
+      {/* Top metadata — parallax float */}
       <div style={{
         position: 'absolute',
         top: isMobile ? '24px' : '36px',
@@ -78,6 +179,8 @@ export default function Hero() {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        transform: `translateY(${-metaParallax}px)`,
+        willChange: 'transform',
       }}>
         <div className={`h-fade${mounted ? ' in' : ''}`} style={{ animationDelay: '0.1s' }}>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(245,241,232,0.35)' }}>
@@ -97,7 +200,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Giant centred name */}
+      {/* Giant centred name — letter stagger + parallax */}
       <div style={{
         position: 'absolute',
         inset: 0,
@@ -107,43 +210,74 @@ export default function Hero() {
         justifyContent: 'center',
         pointerEvents: 'none',
         userSelect: 'none',
+        transform: `translateY(${-nameParallax}px)`,
+        willChange: 'transform',
       }}>
-        <div className={`h-name${mounted ? ' in' : ''}`} style={{ animationDelay: '0.3s', textAlign: 'center' }}>
+        <div style={{ textAlign: 'center', overflow: 'hidden' }}>
+          {/* HITANSHU — letter by letter */}
           <div style={{
             fontFamily: 'var(--font-sans)',
             fontWeight: 900,
-            fontStyle: 'italic',
             fontSize: 'clamp(4rem, 13vw, 14rem)',
             lineHeight: 0.88,
             letterSpacing: '-0.03em',
-            color: 'var(--cream)',
           }}>
-            HITANSHU
+            {FIRST.split('').map((ch, i) => (
+              <span
+                key={i}
+                className={`h-letter${mounted ? ' in' : ''}`}
+                style={{
+                  animationDelay: `${0.3 + i * 0.045}s`,
+                  color: 'var(--cream)',
+                }}
+              >
+                {ch}
+              </span>
+            ))}
           </div>
+
+          {/* GAJJAR. — gradient shimmer */}
           <div style={{
             fontFamily: 'var(--font-sans)',
             fontWeight: 900,
-            fontStyle: 'italic',
             fontSize: 'clamp(4rem, 13vw, 14rem)',
             lineHeight: 0.88,
             letterSpacing: '-0.03em',
-            color: 'var(--accent)',
           }}>
-            GAJJAR.
+            {LAST.split('').map((ch, i) => {
+              const delay = 0.3 + (FIRST.length + i) * 0.045
+              return (
+                <span
+                  key={i}
+                  className={`h-letter${mounted ? ' in' : ''}`}
+                  style={{ animationDelay: `${delay}s` }}
+                >
+                  <span
+                    className={`h-gradient-text${mounted ? ' shimmer' : ''}`}
+                    style={{ animationDelay: `${delay + 0.9}s` }}
+                  >
+                    {ch}
+                  </span>
+                </span>
+              )
+            })}
           </div>
         </div>
       </div>
 
-      {/* Divider line */}
+      {/* Animated divider */}
       {!isMobile && (
-        <div style={{
-          position: 'absolute',
-          bottom: '140px',
-          left: '36px',
-          right: '36px',
-          height: '1px',
-          background: 'rgba(245,241,232,0.08)',
-        }} />
+        <div
+          className={`h-divider${mounted ? ' in' : ''}`}
+          style={{
+            position: 'absolute',
+            bottom: '140px',
+            left: '36px',
+            right: '36px',
+            height: '1px',
+            background: 'rgba(245,241,232,0.08)',
+          }}
+        />
       )}
 
       {/* Bottom bar */}
@@ -163,7 +297,7 @@ export default function Hero() {
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '8px',
+            gap: '10px',
             fontFamily: 'var(--font-mono)',
             fontSize: '0.6rem',
             letterSpacing: '0.15em',
@@ -171,7 +305,10 @@ export default function Hero() {
             color: 'var(--cream-muted)',
             marginBottom: '10px',
           }}>
-            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--green)', boxShadow: '0 0 8px var(--green)', display: 'inline-block' }} />
+            <span className="avail-dot-wrap">
+              <span className="avail-dot-ring" />
+              <span className="avail-dot" />
+            </span>
             {META.availability}
           </div>
           <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.9rem', lineHeight: 1.55, color: 'var(--cream-muted)' }}>
@@ -179,7 +316,7 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* Centre — scroll / role */}
+        {/* Centre — role ticker */}
         <div className={`h-fade${mounted ? ' in' : ''}`} style={{ animationDelay: '0.75s', textAlign: isMobile ? 'left' : 'center', flexShrink: 0 }}>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(245,241,232,0.3)', marginBottom: '4px' }}>
             // CURRENTLY
@@ -190,12 +327,20 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right — CTAs */}
-        <div className={`h-fade${mounted ? ' in' : ''}`} style={{ animationDelay: '0.85s', display: 'flex', gap: '10px', alignItems: 'center', flexShrink: 0, flexWrap: 'wrap' }}>
-          <Link to="/projects" className="pill pill-outline" style={{ fontSize: '0.65rem' }}>
+        {/* Right — CTAs with spring */}
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexShrink: 0, flexWrap: 'wrap' }}>
+          <Link
+            to="/projects"
+            className={`pill pill-outline h-spring${mounted ? ' in' : ''}`}
+            style={{ fontSize: '0.65rem', animationDelay: '0.85s' }}
+          >
             SEE THE WORK ↗
           </Link>
-          <a href="#contact" className="pill pill-accent" style={{ fontSize: '0.65rem' }}>
+          <a
+            href="#contact"
+            className={`pill pill-accent h-spring${mounted ? ' in' : ''}`}
+            style={{ fontSize: '0.65rem', animationDelay: '0.95s' }}
+          >
             CONTACT
           </a>
         </div>
@@ -207,7 +352,6 @@ export default function Hero() {
           position: 'absolute',
           bottom: '48px',
           left: '50%',
-          transform: 'translateX(-50%)',
           width: '1px',
           height: '48px',
           background: 'linear-gradient(to bottom, rgba(245,241,232,0.25), transparent)',
