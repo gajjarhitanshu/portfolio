@@ -14,7 +14,7 @@ const COMPANY_COLORS = {
 const YEARS = [2020, 2021, 2022, 2023, 2024, 2025, 2026]
 
 // ──────────────────────────────────────────────────────────────
-// FEATURED CARD
+// FEATURED CARD — Option A: sharp tilt cards
 // ──────────────────────────────────────────────────────────────
 function FeaturedCard({ project, isFirst, isMobile }) {
   const cardRef = useRef(null)
@@ -51,7 +51,7 @@ function FeaturedCard({ project, isFirst, isMobile }) {
         position: 'relative',
         background: 'rgba(255,255,255,0.02)',
         border: '1px solid rgba(245,241,232,0.08)',
-        borderRadius: '12px',
+        borderRadius: '0',
         padding: isFirst ? (isMobile ? '28px' : '48px') : '32px',
         cursor: 'none',
         overflow: 'hidden',
@@ -74,6 +74,16 @@ function FeaturedCard({ project, isFirst, isMobile }) {
         }
         .feat-card:hover::before { opacity: 1; }
         .feat-card:hover { border-color: rgba(255,107,61,0.3); }
+        .feat-card-bar {
+          position: absolute;
+          left: 0; top: 0; bottom: 0;
+          width: 2px;
+          background: var(--accent);
+          transform: scaleY(0);
+          transform-origin: top;
+          transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
+        }
+        .feat-card:hover .feat-card-bar { transform: scaleY(1); }
         .feat-card .fc-arrow {
           font-family: var(--font-mono);
           font-size: 1.4rem;
@@ -85,7 +95,18 @@ function FeaturedCard({ project, isFirst, isMobile }) {
           margin-left: 16px;
         }
         .feat-card:hover .fc-arrow { opacity: 1; transform: translate(0,0); }
+        .feat-card .fc-title {
+          font-family: var(--font-sans);
+          font-weight: 800;
+          letter-spacing: -0.03em;
+          color: var(--cream);
+          line-height: 1.1;
+          transition: color 0.25s;
+        }
+        .feat-card:hover .fc-title { color: var(--cream); }
       `}</style>
+
+      <div className="feat-card-bar" />
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div>
@@ -99,14 +120,10 @@ function FeaturedCard({ project, isFirst, isMobile }) {
           }}>
             {project.company} · {project.year}
           </div>
-          <h3 style={{
-            fontFamily: 'var(--font-sans)',
-            fontWeight: 700,
-            fontSize: isFirst ? 'clamp(1.8rem, 3.5vw, 2.8rem)' : 'clamp(1.2rem, 2vw, 1.7rem)',
-            letterSpacing: '-0.03em',
-            color: 'var(--cream)',
-            lineHeight: 1.1,
-          }}>
+          <h3
+            className="fc-title"
+            style={{ fontSize: isFirst ? 'clamp(1.8rem, 3.5vw, 2.8rem)' : 'clamp(1.2rem, 2vw, 1.7rem)' }}
+          >
             {project.title}
           </h3>
         </div>
@@ -143,7 +160,7 @@ function FeaturedCard({ project, isFirst, isMobile }) {
 }
 
 // ──────────────────────────────────────────────────────────────
-// CONSTELLATION — exact port of constellation.js
+// CONSTELLATION
 // ──────────────────────────────────────────────────────────────
 function Constellation() {
   const containerRef = useRef(null)
@@ -160,7 +177,6 @@ function Constellation() {
       return h
     }
 
-    // Canvas
     const canvas = document.createElement('canvas')
     canvas.style.cursor = 'pointer'
     canvas.style.display = 'block'
@@ -223,21 +239,19 @@ function Constellation() {
     let edges = buildEdges()
     window.addEventListener('resize', () => { edges = buildEdges() })
 
-    // Hover card
     const card = document.createElement('div')
     card.style.cssText = `
       position:absolute; pointer-events:none; z-index:10;
       background:rgba(13,13,16,0.95); border:1px solid rgba(245,241,232,0.1);
-      border-radius:8px; padding:14px 18px; min-width:200px; max-width:260px;
+      border-radius:0; padding:14px 18px; min-width:200px; max-width:260px;
       opacity:0; transform:translateY(4px);
       transition:opacity 0.18s ease, transform 0.18s ease;
       font-family:var(--font-mono); color:var(--cream);
     `
-    card.innerHTML = '<div class="cm"></div><h4 class="cn" style="margin:6px 0 4px;font-family:var(--font-sans);font-weight:700;font-size:0.95rem;"></h4><p class="co" style="font-size:0.75rem;color:rgba(245,241,232,0.55);margin:0 0 8px;line-height:1.4;"></p><div class="ct" style="font-size:0.65rem;color:var(--accent);letter-spacing:0.06em;"></div>'
+    card.innerHTML = '<div class="cm"></div><h4 class="cn" style="margin:6px 0 4px;font-family:var(--font-sans);font-weight:800;font-size:0.95rem;"></h4><p class="co" style="font-size:0.75rem;color:rgba(245,241,232,0.55);margin:0 0 8px;line-height:1.4;"></p><div class="ct" style="font-size:0.65rem;color:var(--accent);letter-spacing:0.06em;"></div>'
     container.style.position = 'relative'
     container.appendChild(card)
 
-    // Floating dust
     const PARTICLES = Array.from({ length: 60 }, () => ({
       x: Math.random() * 1200, y: Math.random() * 420,
       v: 0.15 + Math.random() * 0.35,
@@ -265,7 +279,6 @@ function Constellation() {
       const t = (now - startTime) / 1000
       ctx.clearRect(0, 0, W, H)
 
-      // Entrance per node
       PROJECTS.forEach((p, i) => {
         const local = Math.max(0, Math.min(1, ((now - startTime) - i * ENTRANCE_STAGGER) / ENTRANCE_DUR))
         const eased = 1 - Math.pow(1 - local, 3)
@@ -275,7 +288,6 @@ function Constellation() {
         p.cy = startY + (p.ty - startY) * eased
       })
 
-      // Year column grid
       YEARS.forEach((yr, i) => {
         const xr = i / (YEARS.length - 1)
         const x = 80 + xr * (W - 160)
@@ -289,7 +301,6 @@ function Constellation() {
         ctx.fillText(yr, x, H - 60)
       })
 
-      // Dust particles
       PARTICLES.forEach((p) => {
         p.y -= p.v
         p.x += Math.sin(t * 0.5 + p.r * 7) * 0.15
@@ -300,7 +311,6 @@ function Constellation() {
         ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill()
       })
 
-      // Find hover
       hoverIdx = -1
       let bestDist = Infinity
       if (pointer.x >= 0) {
@@ -312,7 +322,6 @@ function Constellation() {
         })
       }
 
-      // Edges
       edges.forEach(([i, j]) => {
         const a = PROJECTS[i], b = PROJECTS[j]
         const isHi = (i === hoverIdx || j === hoverIdx)
@@ -326,7 +335,6 @@ function Constellation() {
         ctx.beginPath(); ctx.arc(px2, py2, isHi ? 2.4 : 1.4, 0, Math.PI * 2); ctx.fill()
       })
 
-      // Nodes
       PROJECTS.forEach((p, i) => {
         const hi = i === hoverIdx
         const color = COMPANY_COLORS[p.companyKey] || '#ccc'
@@ -369,7 +377,6 @@ function Constellation() {
         }
       })
 
-      // Hover card
       if (hoverIdx >= 0) {
         const p = PROJECTS[hoverIdx]
         card.style.left = p.x + 'px'
@@ -450,7 +457,30 @@ function ArchiveList({ isMobile }) {
           transition: color 0.25s;
         }
         .archive-row:hover .ar-year { color: var(--accent); }
+        .archive-header-row {
+          display: grid;
+          gap: 24px;
+          padding: 0 0 12px;
+          borderBottom: 1px solid rgba(245,241,232,0.07);
+        }
       `}</style>
+
+      {/* Column headers */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: isMobile ? '48px 1fr 20px' : '60px 1fr auto auto 24px',
+        gap: isMobile ? '12px' : '24px',
+        padding: '0 0 12px',
+        borderBottom: '1px solid rgba(245,241,232,0.07)',
+        marginBottom: '0',
+      }}>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--accent)' }}>Year</span>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--accent)' }}>Project</span>
+        {!isMobile && <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--accent)' }}>Company</span>}
+        {!isMobile && <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--accent)' }}>Stack</span>}
+        <span />
+      </div>
+
       {PROJECTS_ARCHIVE.map((p, i) => (
         <div
           key={i}
@@ -520,33 +550,85 @@ export default function Projects() {
     <div style={{ background: 'var(--ink)', minHeight: '100vh' }}>
       <Nav />
 
-      {/* Hero */}
-      <section style={{ paddingTop: '140px', paddingBottom: '80px', paddingLeft: isMobile ? '20px' : '60px', paddingRight: isMobile ? '20px' : '60px', borderBottom: '1px solid rgba(245,241,232,0.06)' }}>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--cream-muted)', marginBottom: '24px' }}>
-          PORTFOLIO · ALL WORK
+      {/* 00 · HERO */}
+      <section style={{
+        paddingTop: '140px',
+        paddingBottom: '80px',
+        paddingLeft: isMobile ? '20px' : '60px',
+        paddingRight: isMobile ? '20px' : '60px',
+        borderBottom: '1px solid rgba(245,241,232,0.07)',
+      }}>
+        {/* Section label */}
+        <div style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: '0.65rem',
+          letterSpacing: '0.15em',
+          textTransform: 'uppercase',
+          color: 'var(--cream-muted)',
+          marginBottom: '24px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px',
+        }}>
+          <span style={{ width: '2rem', height: '1px', background: 'var(--accent)', display: 'inline-block' }} />
+          00 · PROJECTS
         </div>
-        <h1 style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 'clamp(3rem, 8vw, 8rem)', letterSpacing: '-0.04em', lineHeight: 0.92, color: 'var(--cream)', marginBottom: '32px' }}>
+
+        <h1 style={{
+          fontFamily: 'var(--font-sans)',
+          fontWeight: 800,
+          fontSize: 'clamp(3rem, 8vw, 8rem)',
+          letterSpacing: '-0.04em',
+          lineHeight: 0.92,
+          color: 'var(--cream)',
+          marginBottom: '48px',
+        }}>
           24 projects.<br />
           <span style={{ color: 'var(--accent)' }}>8+ years.</span>
         </h1>
-        {/* Stat cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: '16px', marginBottom: '40px', maxWidth: '720px' }}>
+
+        {/* Inline stat strip */}
+        <div style={{
+          borderTop: '1px solid rgba(245,241,232,0.07)',
+          borderBottom: '1px solid rgba(245,241,232,0.07)',
+          paddingTop: '24px',
+          paddingBottom: '24px',
+          marginBottom: '40px',
+          display: 'grid',
+          gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
+          gap: isMobile ? '24px 0' : '0',
+        }}>
           {[
             { value: '24', label: 'Projects shipped' },
             { value: '8+', label: 'Years experience' },
             { value: '3', label: 'Continents' },
             { value: '15+', label: 'Teams led' },
-          ].map(s => (
-            <div key={s.label} style={{
-              background: 'rgba(255,255,255,0.03)',
-              border: '1px solid rgba(245,241,232,0.08)',
-              borderRadius: '10px',
-              padding: '20px 16px',
-            }}>
-              <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: '1.8rem', letterSpacing: '-0.03em', color: 'var(--accent)', lineHeight: 1, marginBottom: '6px' }}>
+          ].map((s, i) => (
+            <div
+              key={s.label}
+              style={{
+                paddingLeft: i > 0 && !isMobile ? '32px' : 0,
+                borderLeft: i > 0 && !isMobile ? '1px solid rgba(245,241,232,0.07)' : 'none',
+              }}
+            >
+              <div style={{
+                fontFamily: 'var(--font-sans)',
+                fontWeight: 800,
+                fontSize: 'clamp(2rem, 4vw, 3rem)',
+                letterSpacing: '-0.03em',
+                color: 'var(--accent)',
+                lineHeight: 1,
+                marginBottom: '6px',
+              }}>
                 {s.value}
               </div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--cream-muted)' }}>
+              <div style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: '0.6rem',
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                color: 'var(--cream-muted)',
+              }}>
                 {s.label}
               </div>
             </div>
@@ -558,36 +640,72 @@ export default function Projects() {
         </p>
       </section>
 
-      {/* Featured grid */}
+      {/* 01 · FEATURED */}
       <section id="featured" style={{ padding: isMobile ? '60px 20px' : '80px 60px' }}>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--cream-muted)', marginBottom: '48px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: '0.65rem',
+          letterSpacing: '0.12em',
+          textTransform: 'uppercase',
+          color: 'var(--cream-muted)',
+          marginBottom: '48px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px',
+        }}>
           <span style={{ width: '2rem', height: '1px', background: 'var(--accent)', display: 'inline-block' }} />
-          FEATURED DEEP-DIVES
+          01 · FEATURED DEEP-DIVES
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '16px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '1px', background: 'rgba(245,241,232,0.07)' }}>
           {FEATURED.map((p, i) => (
             <FeaturedCard key={p.id} project={p} isFirst={i === 0} isMobile={isMobile} />
           ))}
         </div>
       </section>
 
-      {/* Constellation archive */}
-      <section id="archive" style={{ padding: isMobile ? '60px 20px' : '80px 60px', borderTop: '1px solid rgba(245,241,232,0.06)' }}>
+      {/* 02 · CONSTELLATION */}
+      <section id="archive" style={{ padding: isMobile ? '60px 20px' : '80px 60px', borderTop: '1px solid rgba(245,241,232,0.07)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '48px', flexWrap: 'wrap', gap: '16px' }}>
           <div>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--cream-muted)', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.65rem',
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+              color: 'var(--cream-muted)',
+              marginBottom: '16px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+            }}>
               <span style={{ width: '2rem', height: '1px', background: 'var(--accent)', display: 'inline-block' }} />
-              FULL ARCHIVE · CONSTELLATION VIEW
+              02 · CONSTELLATION VIEW
             </div>
-            <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 3.5rem)', letterSpacing: '-0.03em', color: 'var(--cream)', lineHeight: 1 }}>
+            <h2 style={{
+              fontFamily: 'var(--font-sans)',
+              fontWeight: 800,
+              fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+              letterSpacing: '-0.03em',
+              color: 'var(--cream)',
+              lineHeight: 1,
+            }}>
               Every project, mapped.
             </h2>
           </div>
 
+          {/* Legend — FULCRUM added */}
           <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
             {Object.entries(COMPANY_COLORS).map(([k, color]) => {
-              const labels = { AGILE: 'Agile Soft Systems', SHINE: 'Shine Infosoft', EWW: 'Excellent Web World', INDIE: 'Independent', TECH: 'Tech Firm' }
+              const labels = {
+                FULCRUM: 'Fulcrum Digital',
+                AGILE: 'Agile Soft Systems',
+                SHINE: 'Shine Infosoft',
+                EWW: 'Excellent Web World',
+                INDIE: 'Independent',
+                TECH: 'Tech Firm',
+              }
+              if (!labels[k]) return null
               return (
                 <div key={k} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                   <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: color, flexShrink: 0 }} />
@@ -601,7 +719,25 @@ export default function Projects() {
         </div>
 
         <Constellation />
-        <ArchiveList isMobile={isMobile} />
+
+        {/* 03 · ARCHIVE */}
+        <div style={{ marginTop: '80px' }}>
+          <div style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.65rem',
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            color: 'var(--cream-muted)',
+            marginBottom: '32px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+          }}>
+            <span style={{ width: '2rem', height: '1px', background: 'var(--accent)', display: 'inline-block' }} />
+            03 · FULL ARCHIVE
+          </div>
+          <ArchiveList isMobile={isMobile} />
+        </div>
       </section>
     </div>
   )
