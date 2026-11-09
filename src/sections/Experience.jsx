@@ -86,7 +86,7 @@ function ExperienceRow({ job, index }) {
           <h3 style={{
             fontFamily: 'var(--font-sans)',
             fontWeight: 700,
-            fontStyle: 'italic',
+            
             fontSize: 'clamp(1.4rem, 2.8vw, 2.2rem)',
             letterSpacing: '-0.02em',
             color: hovered ? 'var(--cream)' : 'rgba(245,241,232,0.8)',
@@ -172,14 +172,13 @@ export default function Experience() {
 
   return (
     <section id="experience" className="section">
-      <div className="section-label">05 · EXPERIENCE</div>
+      <div className="section-label">04 · EXPERIENCE</div>
 
       <div ref={headRef} className="reveal" style={{ marginBottom: '56px' }}>
         <h2 style={{
           fontFamily: 'var(--font-sans)',
-          fontWeight: 900,
-          fontStyle: 'italic',
-          fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+          fontWeight: 800,
+          fontSize: 'clamp(2.6rem, 5.5vw, 5rem)',
           letterSpacing: '-0.03em',
           lineHeight: 1,
           color: 'var(--cream)',
