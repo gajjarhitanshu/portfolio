@@ -1,0 +1,34 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0d0d0f"/>
+      <stop offset="100%" stop-color="#1a1210"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <line x1="0" y1="315" x2="1200" y2="315" stroke="rgba(245,241,232,0.04)" stroke-width="1"/>
+  <line x1="600" y1="0" x2="600" y2="630" stroke="rgba(245,241,232,0.04)" stroke-width="1"/>
+  <rect x="80" y="80" width="3" height="470" fill="#ff6b3d" opacity="0.6"/>
+  <text x="104" y="130" font-family="'Space Grotesk',system-ui,sans-serif" font-weight="700" font-size="36" fill="#ff6b3d" letter-spacing="-0.02em">HG</text>
+  <text x="104" y="155" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(245,241,232,0.35)" letter-spacing="0.12em">PORTFOLIO · 2026</text>
+  <text x="104" y="310" font-family="'Space Grotesk',system-ui,sans-serif" font-weight="700" font-size="88" fill="#f5f1e8" letter-spacing="-0.04em">Hitanshu</text>
+  <text x="104" y="400" font-family="'Space Grotesk',system-ui,sans-serif" font-weight="700" font-size="88" fill="#f5f1e8" letter-spacing="-0.04em">Gajjar</text>
+  <rect x="104" y="430" width="380" height="38" rx="2" fill="rgba(255,107,61,0.12)"/>
+  <text x="124" y="454" font-family="'JetBrains Mono',monospace" font-size="14" fill="#ff6b3d" letter-spacing="0.06em">SR. SOFTWARE ENGINEER</text>
+  <line x1="780" y1="200" x2="780" y2="490" stroke="rgba(245,241,232,0.07)" stroke-width="1"/>
+  <text x="820" y="260" font-family="'Space Grotesk',system-ui,sans-serif" font-weight="700" font-size="64" fill="#f5f1e8" letter-spacing="-0.04em">8+</text>
+  <text x="820" y="288" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(245,241,232,0.4)" letter-spacing="0.1em">YEARS EXPERIENCE</text>
+  <line x1="820" y1="310" x2="1120" y2="310" stroke="rgba(245,241,232,0.07)" stroke-width="1"/>
+  <text x="820" y="370" font-family="'Space Grotesk',system-ui,sans-serif" font-weight="700" font-size="64" fill="#f5f1e8" letter-spacing="-0.04em">24</text>
+  <text x="820" y="398" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(245,241,232,0.4)" letter-spacing="0.1em">PROJECTS SHIPPED</text>
+  <line x1="820" y1="420" x2="1120" y2="420" stroke="rgba(245,241,232,0.07)" stroke-width="1"/>
+  <text x="820" y="478" font-family="'Space Grotesk',system-ui,sans-serif" font-weight="700" font-size="64" fill="#ff6b3d" letter-spacing="-0.04em">3</text>
+  <text x="820" y="506" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(245,241,232,0.4)" letter-spacing="0.1em">CONTINENTS</text>
+  <text x="104" y="556" font-family="'JetBrains Mono',monospace" font-size="13" fill="rgba(245,241,232,0.3)" letter-spacing="0.08em">gajjarhitanshu.netlify.app</text>
+  <circle cx="1100" cy="100" r="2" fill="#ff6b3d" opacity="0.15"/>
+  <circle cx="1130" cy="100" r="2" fill="#ff6b3d" opacity="0.15"/>
+  <circle cx="1160" cy="100" r="2" fill="#ff6b3d" opacity="0.15"/>
+  <circle cx="1100" cy="130" r="2" fill="#ff6b3d" opacity="0.15"/>
+  <circle cx="1130" cy="130" r="2" fill="#ff6b3d" opacity="0.15"/>
+  <circle cx="1160" cy="130" r="2" fill="#ff6b3d" opacity="0.15"/>
+</svg>
