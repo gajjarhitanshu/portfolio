@@ -2,18 +2,16 @@ import { useEffect, useState } from 'react'
 
 export default function Loader({ onDone }) {
   const [count, setCount] = useState(0)
-  const [visible, setVisible] = useState(true)
+  const [phase, setPhase] = useState('in') // 'in' | 'out'
 
   useEffect(() => {
     let start = null
-    const duration = 2000
+    const duration = 400 // was 2000ms — reduced to keep LCP under 2.5s Good threshold
 
     const step = (timestamp) => {
       if (!start) start = timestamp
       const progress = Math.min((timestamp - start) / duration, 1)
-      const eased = progress < 0.5
-        ? 4 * progress * progress * progress
-        : 1 - Math.pow(-2 * progress + 2, 3) / 2
+      const eased = 1 - Math.pow(1 - progress, 3)
       setCount(Math.floor(eased * 100))
 
       if (progress < 1) {
@@ -21,16 +19,14 @@ export default function Loader({ onDone }) {
       } else {
         setCount(100)
         setTimeout(() => {
-          setVisible(false)
-          setTimeout(onDone, 600)
-        }, 300)
+          setPhase('out')
+          setTimeout(onDone, 300)
+        }, 80)
       }
     }
 
     requestAnimationFrame(step)
   }, [onDone])
-
-  if (!visible) return null
 
   return (
     <div style={{
@@ -42,8 +38,9 @@ export default function Loader({ onDone }) {
       alignItems: 'center',
       justifyContent: 'center',
       zIndex: 10000,
-      transition: 'opacity 0.6s ease',
-      opacity: visible ? 1 : 0,
+      opacity: phase === 'out' ? 0 : 1,
+      transition: 'opacity 0.3s ease',
+      pointerEvents: phase === 'out' ? 'none' : 'auto',
     }}>
       <div style={{
         fontFamily: 'var(--font-sans)',

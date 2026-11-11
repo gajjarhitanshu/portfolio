@@ -6,19 +6,19 @@ import Home from './pages/Home'
 import Projects from './pages/Projects'
 
 export default function App() {
-  const [loaded, setLoaded] = useState(false)
-  const handleDone = useCallback(() => setLoaded(true), [])
+  const [loaderDone, setLoaderDone] = useState(false)
+  const handleDone = useCallback(() => setLoaderDone(true), [])
 
   return (
     <BrowserRouter>
       <Cursor />
-      {!loaded && <Loader onDone={handleDone} />}
-      <div style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.5s ease' }}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/projects" element={<Projects />} />
-        </Routes>
-      </div>
+      {!loaderDone && <Loader onDone={handleDone} />}
+      {/* Content renders immediately at full opacity — loader sits on top.
+          This lets Googlebot and LCP measurement see real content on first paint. */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/projects" element={<Projects />} />
+      </Routes>
     </BrowserRouter>
   )
 }
