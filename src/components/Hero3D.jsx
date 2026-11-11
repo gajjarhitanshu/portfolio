@@ -116,7 +116,15 @@ export default function Hero3D() {
     let rotSpd = reducedMotion ? 0 : 0.003
     let burst = 0
 
+    let isVisible = true
+    const visObs = new IntersectionObserver(([e]) => {
+      isVisible = e.isIntersecting
+      if (isVisible && !animId) animate()
+    }, { threshold: 0.01 })
+    visObs.observe(container)
+
     function animate() {
+      if (!isVisible) { animId = null; return }
       animId = requestAnimationFrame(animate)
       const t = clock.getElapsedTime()
 
@@ -179,6 +187,7 @@ export default function Hero3D() {
     animate()
 
     return () => {
+      visObs.disconnect()
       cancelAnimationFrame(animId)
       window.removeEventListener('pointermove', onMove)
       window.removeEventListener('resize', resize)

@@ -17,8 +17,8 @@ export const META = {
 };
 
 export const ROLES = [
-  "React Native Engineer",
   "Sr. Software Engineer",
+  "React Native Engineer",
   "Team Lead",
   "AI Integration Specialist",
 ];
@@ -456,6 +456,6 @@ export const PROJECTS_ARCHIVE = [
 
 export const LINKS = {
   linkedin: "https://linkedin.com/in/hitanshu-gajjar",
-  github: "https://github.com/hitanshu-gajjar",
+  github: "https://github.com/gajjarhitanshu",
   email: "mailto:hitanshu.hexxum@gmail.com",
 };

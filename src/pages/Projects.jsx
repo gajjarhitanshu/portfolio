@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Helmet } from 'react-helmet-async'
 import Nav from '../components/Nav'
 import { FEATURED, PROJECTS_ARCHIVE } from '../data'
 import useIsMobile from '../hooks/useIsMobile'
@@ -110,7 +111,7 @@ function FeaturedCard({ project, isFirst, isMobile }) {
             {project.title}
           </h3>
         </div>
-        <span className="fc-arrow">↗</span>
+        <span className="fc-arrow" aria-hidden="true">↗</span>
       </div>
 
       <p style={{
@@ -502,7 +503,7 @@ function ArchiveList({ isMobile }) {
               {p.stack}
             </span>
           )}
-          <span className="ar-arrow">↗</span>
+          <span className="ar-arrow" aria-hidden="true">↗</span>
         </div>
       ))}
     </div>
@@ -517,6 +518,17 @@ export default function Projects() {
   useEffect(() => { window.scrollTo(0, 0) }, [])
 
   return (
+    <>
+      <Helmet>
+        <title>Projects — Hitanshu Gajjar</title>
+        <meta name="description" content="24 projects across web and mobile — React.js, React Native, TypeScript, GenAI. 8+ years of shipped production work." />
+        <link rel="canonical" href="https://gajjarhitanshu.netlify.app/projects" />
+        <meta property="og:url" content="https://gajjarhitanshu.netlify.app/projects" />
+        <meta property="og:title" content="Projects — Hitanshu Gajjar" />
+        <meta property="og:description" content="24 projects across web and mobile — React.js, React Native, TypeScript, GenAI. 8+ years of shipped production work." />
+        <meta name="twitter:title" content="Projects — Hitanshu Gajjar" />
+        <meta name="twitter:description" content="24 projects across web and mobile — React.js, React Native, TypeScript, GenAI." />
+      </Helmet>
     <div style={{ background: 'var(--ink)', minHeight: '100vh' }}>
       <Nav />
 
@@ -604,5 +616,6 @@ export default function Projects() {
         <ArchiveList isMobile={isMobile} />
       </section>
     </div>
+    </>
   )
 }
