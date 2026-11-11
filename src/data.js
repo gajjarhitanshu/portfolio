@@ -456,6 +456,6 @@ export const PROJECTS_ARCHIVE = [
 
 export const LINKS = {
   linkedin: "https://linkedin.com/in/hitanshu-gajjar",
-  github: "https://github.com/hitanshu-gajjar",
+  github: "https://github.com/gajjarhitanshu",
   email: "mailto:hitanshu.hexxum@gmail.com",
 };

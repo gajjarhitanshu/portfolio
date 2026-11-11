@@ -3,7 +3,7 @@ import { ABOUT, STATS } from '../data'
 import useIsMobile from '../hooks/useIsMobile'
 
 function Counter({ value, suffix, label, isLast }) {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(value)
   const ref = useRef(null)
   const started = useRef(false)
   const isMobile = useIsMobile()

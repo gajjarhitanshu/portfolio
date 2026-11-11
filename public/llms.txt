@@ -1,0 +1,20 @@
+# Hitanshu Gajjar — Portfolio
+
+> Senior React.js and React Native Developer · 8+ years experience
+
+## About
+Hitanshu Gajjar is a frontend engineer specializing in React.js, React Native,
+TypeScript, and Node.js. Available for remote work.
+
+## Experience highlights
+- Senior React.js Developer at Fulcrum Digital
+- 8+ years building scalable web and mobile applications
+- Expertise: React, React Native, TypeScript, Node.js, Three.js, GraphQL
+
+## Projects
+See /projects for a full list of featured work including generative AI tools,
+performance optimization systems, and enterprise web applications.
+
+## Contact
+GitHub: https://github.com/gajjarhitanshu
+See /contact for availability and email contact.
