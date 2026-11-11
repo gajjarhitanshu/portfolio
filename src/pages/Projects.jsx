@@ -110,7 +110,7 @@ function FeaturedCard({ project, isFirst, isMobile }) {
             {project.title}
           </h3>
         </div>
-        <span className="fc-arrow">↗</span>
+        <span className="fc-arrow" aria-hidden="true">↗</span>
       </div>
 
       <p style={{
@@ -502,7 +502,7 @@ function ArchiveList({ isMobile }) {
               {p.stack}
             </span>
           )}
-          <span className="ar-arrow">↗</span>
+          <span className="ar-arrow" aria-hidden="true">↗</span>
         </div>
       ))}
     </div>

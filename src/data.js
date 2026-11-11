@@ -17,8 +17,8 @@ export const META = {
 };
 
 export const ROLES = [
-  "React Native Engineer",
   "Sr. Software Engineer",
+  "React Native Engineer",
   "Team Lead",
   "AI Integration Specialist",
 ];
